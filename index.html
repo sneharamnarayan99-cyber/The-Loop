@@ -6,21 +6,22 @@
 <title>The Loop</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;font-family:system-ui,sans-serif}
-body{background:#07120a;color:#f0f4f0;overflow:hidden}
+html,body{width:100%;height:100%;font-family:system-ui,sans-serif;overflow:hidden}
+body{background:#07120a;color:#f0f4f0}
 
-/* ─── SCREENS ─── */
-.scr{display:none;width:100%;height:100%;position:absolute;top:0;left:0}
+.scr{display:none;width:100%;height:100%;position:fixed;top:0;left:0;z-index:1}
 .scr.on{display:flex}
 
-#s-auth{background:linear-gradient(170deg,#0f2612,#07120a);flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;z-index:1}
-#s-title{background:linear-gradient(170deg,#122016,#07120a);flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 20px;z-index:1}
-#s-game{background:#000;flex-direction:column;z-index:1}
-#s-shop{background:linear-gradient(170deg,#1a1400,#0a0800);flex-direction:column;align-items:center;padding:20px;overflow-y:auto;z-index:1}
-#s-lvl{background:rgba(0,0,0,.96);flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-y:auto;z-index:1}
-#s-over{background:rgba(0,0,0,.97);flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-y:auto;z-index:1}
+#s-auth{background:linear-gradient(170deg,#0f2612,#07120a);flex-direction:column;align-items:center;justify-content:center;padding:24px 20px}
+#s-title{background:linear-gradient(170deg,#122016,#07120a);flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 20px}
+#s-game{background:#000;flex-direction:column}
+#s-shop{background:linear-gradient(170deg,#1a1400,#0a0800);flex-direction:column;align-items:center;padding:20px;overflow-y:auto}
+#s-lvl{background:rgba(0,0,0,.96);flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+#s-over{background:rgba(0,0,0,.97);flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
 
-/* Auth Card */
+/* Canvas layer - BEHIND everything */
+#gc{position:fixed;top:0;left:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none}
+
 .logo h1{font-size:clamp(44px,11vw,60px);font-weight:900;color:#7cb342;letter-spacing:-3px;line-height:.9;text-shadow:0 0 40px rgba(124,179,66,.5);text-align:center}
 .logo p{font-size:9px;font-weight:700;letter-spacing:5px;color:rgba(124,179,66,.45);text-transform:uppercase;text-align:center;margin-top:8px}
 .acard{width:100%;max-width:400px;background:rgba(255,255,255,.04);border:1.5px solid rgba(124,179,66,.22);border-radius:20px;overflow:hidden;margin-top:24px}
@@ -38,7 +39,6 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 .aswitch{text-align:center;padding:13px;color:rgba(255,255,255,.28);font-size:12px}
 .aswitch a{color:#7cb342;cursor:pointer;font-weight:600}
 
-/* Title Screen */
 .ubar{display:flex;align-items:center;gap:12px;background:rgba(124,179,66,.07);border:1.5px solid rgba(124,179,66,.18);border-radius:40px;padding:7px 14px 7px 9px;width:100%;max-width:440px}
 .uav{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7cb342,#4caf50);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#071209;flex-shrink:0}
 .uinfo{flex:1;min-width:0}
@@ -56,12 +56,8 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 .tplay:active{opacity:.88}
 .tshopbtn{background:rgba(255,193,7,.1);border:1.5px solid rgba(255,193,7,.3);color:#ffc107;padding:15px 18px;border-radius:12px;font-size:22px;cursor:pointer}
 
-/* ─── GAME SCREEN ─── */
-#s-game{position:relative}
-#gc{display:block;width:100%;height:100%;position:absolute;top:0;left:0;z-index:1}
-
-/* HUD: Absolute positioning, stays on top */
-#g-hud-cell{position:absolute;top:0;left:0;right:0;height:44px;background:rgba(0,0,0,.92);border-bottom:2px solid rgba(255,255,255,.06);z-index:10;display:flex;align-items:center;gap:7px;padding:5px 10px;overflow:hidden}
+/* GAME UI - FIXED POSITIONING ABOVE CANVAS */
+#g-hud-cell{position:fixed;top:0;left:0;right:0;height:44px;background:rgba(0,0,0,.92);border-bottom:2px solid rgba(255,255,255,.06);z-index:100;display:flex;align-items:center;gap:7px;padding:5px 10px;overflow:hidden}
 #g-lives{display:flex;gap:1px;font-size:13px}
 #g-prog{flex:1;min-width:80px}
 #g-sname{font-size:8px;color:rgba(255,255,255,.32);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:600;max-width:40vw}
@@ -71,18 +67,16 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 #g-score{color:#26c6da;font-size:11px;font-weight:700;min-width:28px;text-align:right}
 .ghbtn{padding:3px 8px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;background:transparent;white-space:nowrap}
 
-/* Controls: Absolute positioning at bottom */
-#g-ctrl-cell{position:absolute;bottom:0;left:0;right:0;height:58px;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);z-index:10;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 10px;overflow:hidden}
+#g-ctrl-cell{position:fixed;bottom:0;left:0;right:0;height:58px;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);z-index:100;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 10px;overflow:hidden}
 .cmb{width:54px;height:48px;border-radius:12px;font-size:21px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.72);touch-action:none;user-select:none}
 .cmb:active{background:rgba(255,255,255,.2)}
-#inv-btn{position:relative;width:64px;height:48px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.4);color:#7cb342;touch-action:none;user-select:none}
+#inv-btn{position:relative;width:64px;height:48px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.4);color:#7cb342;touch-action:none;user-select:none;z-index:101}
 #inv-btn:active{background:rgba(124,179,66,.25)}
 #inv-badge{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
-#jbtn{height:48px;padding:0 20px;min-width:86px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;touch-action:none;user-select:none;border:2px solid rgba(255,214,0,.5);color:#ffd600;background:rgba(255,214,0,.15);letter-spacing:1px}
+#jbtn{height:48px;padding:0 20px;min-width:86px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;touch-action:none;user-select:none;border:2px solid rgba(255,214,0,.5);color:#ffd600;background:rgba(255,214,0,.15);letter-spacing:1px;z-index:101}
 #jbtn:active{opacity:.8}
 
-/* Inventory drawer */
-#inv-drawer{position:absolute;bottom:58px;left:0;right:0;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:20px 20px 0 0;padding:14px;z-index:12;max-height:55%;overflow-y:auto;transform:translateY(100%);transition:transform .25s ease}
+#inv-drawer{position:fixed;bottom:58px;left:0;right:0;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:20px 20px 0 0;padding:14px;z-index:102;max-height:55%;overflow-y:auto;transform:translateY(100%);transition:transform .25s ease}
 #inv-drawer.open{transform:translateY(0)}
 .id-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .id-title{font-size:13px;font-weight:700;color:#7cb342}
@@ -92,7 +86,6 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 .id-slot:active{transform:scale(.9)}
 .id-empty{color:rgba(255,255,255,.32);font-size:13px;text-align:center;padding:16px 0;width:100%}
 
-/* Shop */
 .sh-inner{max-width:500px;margin:0 auto;width:100%}
 .sh-top{text-align:center;margin-bottom:20px;padding-top:6px}
 .sh-top h2{font-size:22px;font-weight:900;color:#ffc107;letter-spacing:2px;margin:6px 0}
@@ -114,7 +107,6 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 .inv-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;font-size:11px;font-weight:600}
 .backbtn{width:100%;padding:14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);font-size:14px;font-weight:700;border-radius:12px;cursor:pointer}
 
-/* Level Card */
 .lvcard{max-width:440px;width:100%;background:#111d14;border-radius:22px;overflow:hidden;border:2px solid rgba(255,255,255,.07)}
 .lv-top{padding:22px 20px 16px;text-align:center}
 .lv-badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
@@ -133,7 +125,6 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 .btn-main{width:100%;padding:14px;font-size:14px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:1px}
 .btn-sec{width:100%;padding:12px;font-size:13px;font-weight:600;border-radius:12px;cursor:pointer;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5)}
 
-/* Game Over Card */
 .ovcard{max-width:420px;width:100%;background:#111d14;border-radius:22px;padding:26px 20px;border:2px solid rgba(255,255,255,.07)}
 .ov-icon{font-size:44px;text-align:center;margin-bottom:7px}
 .ov-title{font-size:21px;font-weight:900;text-align:center;margin-bottom:3px}
@@ -144,12 +135,12 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 .ov-sl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.38;margin-top:2px}
 .ov-acts{display:flex;flex-direction:column;gap:8px}
 
-/* Toast */
 #toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(10,24,14,.97);border:1.5px solid rgba(124,179,66,.35);border-radius:999px;padding:9px 22px;font-size:13px;font-weight:600;color:#fff;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none;max-width:92vw;text-align:center}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
+<canvas id="gc"></canvas>
 <div id="toast"></div>
 
 <!-- ══ AUTH ══ -->
@@ -191,7 +182,6 @@ body{background:#07120a;color:#f0f4f0;overflow:hidden}
 
 <!-- ══ GAME ══ -->
 <div id="s-game" class="scr">
-  <canvas id="gc"></canvas>
   <div id="g-hud-cell">
     <div id="g-lives"></div>
     <div id="g-prog">
@@ -361,7 +351,7 @@ function doLogout(){ME=null;showScreen('s-auth');}
 
 /* ═══════════════════════════════════════
    STAGE DATA
-═════════════���═════════════════════════ */
+═══════════════════════════════════════ */
 var ST=[
   {name:'The Open Plain',  sub:'Foundation',    bg:['#87ceeb','#c8e6c9'],gr:'#4a7c4e',pl:'#5a9a5e',ac:'#ffd600',ic:'🌾',sk:'Clarity of Purpose',       sd:'You mapped the terrain and moved forward with focus. A strong foundation is the first act of leadership.'},
   {name:'Rolling Hills',   sub:'Momentum',      bg:['#78c4e0','#b8ddb0'],gr:'#3d6b41',pl:'#4a7c4e',ac:'#aed581',ic:'🌄',sk:'Building Momentum',         sd:'You kept moving through ups and downs, turning small steps into sustained forward energy.'},
@@ -424,7 +414,7 @@ function closeShop(){
   else goTitle();
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════��═══════════════════
    INVENTORY DRAWER
 ═══════════════════════════════════════ */
 function refreshInvUI(){
