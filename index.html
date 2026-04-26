@@ -54,8 +54,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 .t-footer{color:rgba(255,255,255,.12);font-size:9px;letter-spacing:2px;text-transform:uppercase}
 
 /* ── GAME ── */
-#pg-game{background:#000;padding:0;justify-content:flex-start;overflow:hidden}
-#hud{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.92);padding:5px 11px;width:100%;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07)}
+#pg-game{background:#000;padding:0;justify-content:flex-start;align-items:stretch;overflow:hidden;gap:0}
+#hud{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.92);padding:6px 12px;width:100%;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07);min-height:52px}
 #hlives{display:flex;gap:1px;font-size:14px}
 #hprog{flex:1;min-width:0}
 #hsname{font-size:8px;color:rgba(255,255,255,.32);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:600}
@@ -66,30 +66,30 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 .hhbtn{padding:4px 9px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;flex-shrink:0;background:transparent}
 
 /* Active boosts strip */
-#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:3px 11px 3px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0}
+#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 12px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0}
 .act-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:10px;font-weight:700}
 
 /* Canvas */
-#cw{flex:1;display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden}
-canvas{display:block;touch-action:none}
+#cw{flex:1;display:flex;align-items:stretch;justify-content:center;width:100%;overflow:hidden;position:relative;min-height:0}
+canvas{display:block;touch-action:none;width:100%;height:100%}
 
 /* Bottom controls */
-#ctrl{display:flex;justify-content:space-between;align-items:center;padding:5px 11px;width:100%;flex-shrink:0;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);gap:8px}
-.cmb{width:56px;height:50px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
+#ctrl{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;width:100%;flex-shrink:0;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);gap:10px;min-height:66px}
+.cmb{width:54px;height:46px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
 .cmb:active{background:rgba(255,255,255,.18)}
 
 /* ── INVENTORY BUTTON (big, obvious, centered) ── */
-#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:72px;height:50px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
+#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:78px;height:46px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
 #inv-btn:active{background:rgba(124,179,66,.25)}
 #inv-btn .ie{font-size:20px;line-height:1}
 #inv-btn .it{font-size:9px;font-weight:700;line-height:1}
 #inv-count{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
 #inv-count.show{display:flex}
-#jbtn{height:50px;padding:0 22px;min-width:88px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
+#jbtn{height:46px;padding:0 20px;min-width:92px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
 #jbtn:active{opacity:.8}
 
 /* ── INVENTORY DRAWER (slides up from bottom of canvas area) ── */
-#inv-drawer{position:absolute;bottom:0;left:0;right:0;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:20px 20px 0 0;padding:16px;z-index:20;transform:translateY(100%);transition:transform .25s ease;max-height:65%}
+#inv-drawer{position:absolute;left:8px;right:8px;bottom:8px;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:18px;padding:14px;z-index:20;transform:translateY(110%);transition:transform .25s ease;max-height:58%;box-shadow:0 12px 40px rgba(0,0,0,.35)}
 #inv-drawer.open{transform:translateY(0)}
 .id-title{font-size:13px;font-weight:700;color:#7cb342;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .id-close{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.45);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}
@@ -219,7 +219,7 @@ canvas{display:block;touch-action:none}
     <button class="hhbtn" id="hpausebtn" onclick="togglePause()" style="color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.15)">⏸</button>
   </div>
   <div id="act-bar"></div>
-  <div id="cw" style="position:relative">
+  <div id="cw">
     <canvas id="gc"></canvas>
     <!-- Inventory Drawer -->
     <div id="inv-drawer">
@@ -738,12 +738,14 @@ function startGame(level){
   PAUSED=false; closeDrawer();
   document.getElementById('hpausebtn').textContent='⏸';
   document.getElementById('act-bar').style.display='none';
+  showPage('pg-game');
 
   var cv=document.getElementById('gc');
-  var W=window.innerWidth;
-  var H=Math.max(160,Math.min(window.innerHeight-116,Math.round(W*9/16)));
-  cv.width=W; cv.height=H;
   var ctx=cv.getContext('2d');
+  var box=cv.parentElement.getBoundingClientRect();
+  var W=Math.max(320,Math.floor(box.width));
+  var H=Math.max(180,Math.floor(box.height));
+  cv.width=W; cv.height=H;
   var S=W/800, GY=H-Math.round(58*S);
   var st=STAGES[Math.min(level,STAGES.length-1)];
   var lv=makeLevel(level,GY);
@@ -768,7 +770,6 @@ function startGame(level){
   };
 
   updateLivesHUD(); refreshInvUI();
-  showPage('pg-game');
 
   function tick(){
     RAF=requestAnimationFrame(tick);
