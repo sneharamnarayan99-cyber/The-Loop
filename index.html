@@ -54,9 +54,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 .t-footer{color:rgba(255,255,255,.12);font-size:9px;letter-spacing:2px;text-transform:uppercase}
 
 /* ── GAME ── */
-#pg-game{background:#000;padding:0;justify-content:flex-start;align-items:stretch;overflow:hidden;gap:0}
-#hud{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.92);padding:6px 12px;width:100%;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07);min-height:52px}
-#hlives{display:flex;gap:1px;font-size:14px}
+#pg-game.on{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;align-items:stretch;justify-items:stretch}
+#pg-game{background:#000;padding:0;overflow:hidden;gap:0;width:100vw;height:100dvh;min-height:100vh}
+#hud{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.92);padding:6px 12px;width:100%;border-bottom:2px solid rgba(255,255,255,.07);min-height:52px;flex-shrink:0;z-index:5}
+#hlives{display:flex;gap:1px;font-size:14px;flex-shrink:0}
 #hprog{flex:1;min-width:0}
 #hsname{font-size:8px;color:rgba(255,255,255,.32);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:600}
 #hbar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
@@ -66,26 +67,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 .hhbtn{padding:4px 9px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;flex-shrink:0;background:transparent}
 
 /* Active boosts strip */
-#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 12px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0}
+#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 12px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0;z-index:4}
 .act-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:10px;font-weight:700}
 
 /* Canvas */
-#cw{flex:1;display:flex;align-items:stretch;justify-content:center;width:100%;overflow:hidden;position:relative;min-height:0}
+#cw{min-height:0;display:flex;align-items:stretch;justify-content:center;width:100%;overflow:hidden;position:relative}
 canvas{display:block;touch-action:none;width:100%;height:100%}
 
 /* Bottom controls */
-#ctrl{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;width:100%;flex-shrink:0;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);gap:10px;min-height:66px}
-.cmb{width:54px;height:46px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
+#ctrl{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;width:100%;flex-shrink:0;background:rgba(0,0,0,.93);border-top:1px solid rgba(255,255,255,.06);gap:12px;min-height:80px;z-index:6}
+#ctrl .left-group,#ctrl .right-group{display:flex;align-items:center;gap:8px;min-width:0}
+#ctrl .left-group{flex:1;justify-content:flex-start}
+#ctrl .right-group{flex:1;justify-content:flex-end}
+.cmb{width:56px;height:48px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
 .cmb:active{background:rgba(255,255,255,.18)}
 
 /* ── INVENTORY BUTTON (big, obvious, centered) ── */
-#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:78px;height:46px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
+#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:86px;height:48px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
 #inv-btn:active{background:rgba(124,179,66,.25)}
 #inv-btn .ie{font-size:20px;line-height:1}
 #inv-btn .it{font-size:9px;font-weight:700;line-height:1}
 #inv-count{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
 #inv-count.show{display:flex}
-#jbtn{height:46px;padding:0 20px;min-width:92px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
+#jbtn{height:48px;padding:0 20px;min-width:96px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
 #jbtn:active{opacity:.8}
 
 /* ── INVENTORY DRAWER (slides up from bottom of canvas area) ── */
@@ -231,11 +235,11 @@ canvas{display:block;touch-action:none;width:100%;height:100%}
     </div>
   </div>
   <div id="ctrl">
-    <div style="display:flex;gap:7px">
+    <div class="left-group">
       <button class="cmb" id="btnL">◀</button>
       <button class="cmb" id="btnR">▶</button>
     </div>
-    <div style="display:flex;gap:7px;align-items:center">
+    <div class="right-group">
       <div id="inv-btn" onclick="toggleDrawer()">
         <div id="inv-count">0</div>
         <span class="ie">🎒</span>
@@ -742,13 +746,20 @@ function startGame(level){
 
   var cv=document.getElementById('gc');
   var ctx=cv.getContext('2d');
-  var box=cv.parentElement.getBoundingClientRect();
-  var W=Math.max(320,Math.floor(box.width));
-  var H=Math.max(180,Math.floor(box.height));
-  cv.width=W; cv.height=H;
-  var S=W/800, GY=H-Math.round(58*S);
-  var st=STAGES[Math.min(level,STAGES.length-1)];
-  var lv=makeLevel(level,GY);
+  var W=0,H=0,S=1,GY=0,st=STAGES[Math.min(level,STAGES.length-1)],lv=null;
+
+  function sizeCanvas(){
+    var box=cv.parentElement.getBoundingClientRect();
+    W=Math.max(320,Math.floor(box.width));
+    H=Math.max(180,Math.floor(box.height));
+    cv.width=W;
+    cv.height=H;
+    S=W/800;
+    GY=H-Math.round(58*S);
+  }
+
+  sizeCanvas();
+  lv=makeLevel(level,GY);
 
   // Style HUD accent
   document.getElementById('hud').style.borderBottomColor=st.ac+'30';
@@ -934,6 +945,8 @@ function startGame(level){
   }
 
   function drawPaused(){render();ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.font='bold '+Math.round(34*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=16;ctx.shadowColor='rgba(100,200,255,.5)';ctx.fillText('Paused',W/2,H/2-14*S);ctx.font=Math.round(13*S)+'px system-ui';ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,255,.45)';ctx.fillText('Tap ⏸ or press P to resume',W/2,H/2+16*S);ctx.textAlign='left';}
+
+  window.onresize = sizeCanvas;
 
   RAF=requestAnimationFrame(tick);
 }
