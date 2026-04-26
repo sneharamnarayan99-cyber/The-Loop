@@ -9,13 +9,12 @@
 body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 
 /* ─── SCREENS ─── */
-/* CRITICAL FIX: Changed display:none to display:flex by default, then show .on */
-.scr{display:flex;flex-direction:column;width:100vw;min-height:100vh;visibility:hidden;position:absolute;top:0;left:0}
-.scr.on{visibility:visible;position:relative}
+.scr{display:none}
+.scr.on{display:block;width:100%;min-height:100vh}
 
 /* ─── AUTH ─── */
-#s-auth{background:linear-gradient(170deg,#0f2612,#07120a);align-items:center;justify-content:center;padding:24px 20px}
-#s-auth.on{visibility:visible;position:relative;display:flex}
+#s-auth{background:linear-gradient(170deg,#0f2612,#07120a);display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;min-height:100vh}
+#s-auth.on{display:flex}
 .logo h1{font-size:clamp(44px,11vw,60px);font-weight:900;color:#7cb342;letter-spacing:-3px;line-height:.9;text-shadow:0 0 40px rgba(124,179,66,.5);text-align:center}
 .logo p{font-size:9px;font-weight:700;letter-spacing:5px;color:rgba(124,179,66,.45);text-transform:uppercase;text-align:center;margin-top:8px}
 .acard{width:100%;max-width:400px;background:rgba(255,255,255,.04);border:1.5px solid rgba(124,179,66,.22);border-radius:20px;overflow:hidden;margin-top:24px}
@@ -34,8 +33,8 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 .aswitch a{color:#7cb342;cursor:pointer;font-weight:600}
 
 /* ─── TITLE ─── */
-#s-title{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 20px;background:linear-gradient(170deg,#122016,#07120a)}
-#s-title.on{visibility:visible;position:relative;display:flex}
+#s-title{background:linear-gradient(170deg,#122016,#07120a);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 20px;min-height:100vh}
+#s-title.on{display:flex}
 .ubar{display:flex;align-items:center;gap:12px;background:rgba(124,179,66,.07);border:1.5px solid rgba(124,179,66,.18);border-radius:40px;padding:7px 14px 7px 9px;width:100%;max-width:440px}
 .uav{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7cb342,#4caf50);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#071209;flex-shrink:0}
 .uinfo{flex:1;min-width:0}
@@ -53,10 +52,14 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 .tplay:active{opacity:.88}
 .tshopbtn{background:rgba(255,193,7,.1);border:1.5px solid rgba(255,193,7,.3);color:#ffc107;padding:15px 18px;border-radius:12px;font-size:22px;cursor:pointer}
 
-/* ─── GAME ─── */
-#s-game{display:flex;flex-direction:column;background:#000;overflow:hidden;width:100vw;height:100vh}
-#s-game.on{visibility:visible;position:relative;display:flex}
-#g-hud-cell{background:rgba(0,0,0,.92);border-bottom:2px solid rgba(255,255,255,.06);overflow:hidden;flex-shrink:0}
+/* ─── GAME ─── 
+   FIX: Game screen is a column flex container with explicit heights
+*/
+#s-game{display:none;background:#000;width:100vw;height:100vh;flex-direction:column;overflow:hidden}
+#s-game.on{display:flex}
+
+/* HUD: Fixed height, stays on top */
+#g-hud-cell{background:rgba(0,0,0,.92);border-bottom:2px solid rgba(255,255,255,.06);overflow:hidden;flex-shrink:0;height:44px;width:100%;position:relative;z-index:100}
 #g-hud-inner{display:flex;align-items:center;gap:7px;padding:5px 10px;height:100%}
 #g-lives{display:flex;gap:1px;font-size:13px}
 #g-prog{flex:1;min-width:80px}
@@ -66,21 +69,18 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 #g-coins{color:#ffc107;font-size:12px;font-weight:700}
 #g-score{color:#26c6da;font-size:11px;font-weight:700;min-width:28px;text-align:right}
 .ghbtn{padding:3px 8px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;background:transparent;white-space:nowrap}
-#g-act-cell{background:rgba(0,0,0,.8);overflow:hidden;display:none;flex-shrink:0}
-#g-actbar{display:flex;flex-wrap:wrap;gap:5px;padding:3px 10px}
+
+/* Activity bar: grows in height when active, stays above canvas */
+#g-act-cell{background:rgba(0,0,0,.8);overflow:hidden;display:none;flex-shrink:0;width:100%;height:0;position:relative;z-index:99}
+#g-actbar{display:flex;flex-wrap:wrap;gap:5px;padding:3px 10px;width:100%}
 .apill{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700}
-#g-canvas-cell{background:#000;overflow:hidden;position:relative;flex:1}
+
+/* Canvas: grows to fill remaining space */
+#g-canvas-cell{background:#000;overflow:hidden;position:relative;flex:1;width:100%;z-index:50}
 #gc{display:block;width:100%;height:100%}
-#g-ctrl-cell{background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);overflow:hidden;flex-shrink:0}
-#g-ctrl-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 10px;height:100%}
-.cmb{width:54px;height:48px;border-radius:12px;font-size:21px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.72);touch-action:none;user-select:none}
-.cmb:active{background:rgba(255,255,255,.2)}
-#inv-btn{position:relative;width:64px;height:48px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.4);color:#7cb342;touch-action:none;user-select:none}
-#inv-btn:active{background:rgba(124,179,66,.25)}
-#inv-badge{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
-#jbtn{height:48px;padding:0 20px;min-width:86px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;touch-action:none;user-select:none;border:2px solid rgba(255,214,0,.5);color:#ffd600;background:rgba(255,214,0,.15);letter-spacing:1px}
-#jbtn:active{opacity:.8}
-#inv-drawer{position:absolute;bottom:0;left:0;right:0;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:20px 20px 0 0;padding:14px;z-index:10;transform:translateY(100%);transition:transform .25s ease;max-height:55%;overflow-y:auto}
+
+/* Inventory drawer: positioned inside canvas cell */
+#inv-drawer{position:absolute;bottom:0;left:0;right:0;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:20px 20px 0 0;padding:14px;z-index:150;transform:translateY(100%);transition:transform .25s ease;max-height:55%;overflow-y:auto}
 #inv-drawer.open{transform:translateY(0)}
 .id-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .id-title{font-size:13px;font-weight:700;color:#7cb342}
@@ -90,9 +90,20 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 .id-slot:active{transform:scale(.9)}
 .id-empty{color:rgba(255,255,255,.32);font-size:13px;text-align:center;padding:16px 0;width:100%}
 
+/* Controls: Fixed height, stays at bottom */
+#g-ctrl-cell{background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);overflow:hidden;flex-shrink:0;height:58px;width:100%;position:relative;z-index:100}
+#g-ctrl-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 10px;height:100%}
+.cmb{width:54px;height:48px;border-radius:12px;font-size:21px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.72);touch-action:none;user-select:none}
+.cmb:active{background:rgba(255,255,255,.2)}
+#inv-btn{position:relative;width:64px;height:48px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.4);color:#7cb342;touch-action:none;user-select:none}
+#inv-btn:active{background:rgba(124,179,66,.25)}
+#inv-badge{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
+#jbtn{height:48px;padding:0 20px;min-width:86px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;touch-action:none;user-select:none;border:2px solid rgba(255,214,0,.5);color:#ffd600;background:rgba(255,214,0,.15);letter-spacing:1px}
+#jbtn:active{opacity:.8}
+
 /* ─── SHOP ─── */
-#s-shop{display:flex;flex-direction:column;align-items:center;background:linear-gradient(170deg,#1a1400,#0a0800);padding:20px;overflow-y:auto}
-#s-shop.on{visibility:visible;position:relative;display:flex}
+#s-shop{background:linear-gradient(170deg,#1a1400,#0a0800);display:none;flex-direction:column;align-items:center;padding:20px;overflow-y:auto;min-height:100vh}
+#s-shop.on{display:flex}
 .sh-inner{max-width:500px;margin:0 auto;width:100%}
 .sh-top{text-align:center;margin-bottom:20px;padding-top:6px}
 .sh-top h2{font-size:22px;font-weight:900;color:#ffc107;letter-spacing:2px;margin:6px 0}
@@ -115,8 +126,8 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 .backbtn{width:100%;padding:14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);font-size:14px;font-weight:700;border-radius:12px;cursor:pointer}
 
 /* ─── LEVEL CARD ─── */
-#s-lvl{display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.96);padding:20px;overflow-y:auto}
-#s-lvl.on{visibility:visible;position:relative;display:flex}
+#s-lvl{display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.96);padding:20px;overflow-y:auto;min-height:100vh}
+#s-lvl.on{display:flex}
 .lvcard{max-width:440px;width:100%;background:#111d14;border-radius:22px;overflow:hidden;border:2px solid rgba(255,255,255,.07)}
 .lv-top{padding:22px 20px 16px;text-align:center}
 .lv-badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
@@ -136,8 +147,8 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 .btn-sec{width:100%;padding:12px;font-size:13px;font-weight:600;border-radius:12px;cursor:pointer;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5)}
 
 /* ─── GAME OVER ─── */
-#s-over{display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.97);padding:20px;overflow-y:auto}
-#s-over.on{visibility:visible;position:relative;display:flex}
+#s-over{display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.97);padding:20px;overflow-y:auto;min-height:100vh}
+#s-over.on{display:flex}
 .ovcard{max-width:420px;width:100%;background:#111d14;border-radius:22px;padding:26px 20px;border:2px solid rgba(255,255,255,.07)}
 .ov-icon{font-size:44px;text-align:center;margin-bottom:7px}
 .ov-title{font-size:21px;font-weight:900;text-align:center;margin-bottom:3px}
@@ -279,8 +290,6 @@ body{background:#07120a;color:#f0f4f0;font-family:system-ui,sans-serif}
 <script>
 /* ═══════════════════════════════════════
    SCREEN MANAGEMENT
-   Each screen uses its own display rule.
-   No shared .page class.
 ═══════════════════════════════════════ */
 var SCREENS=['s-auth','s-title','s-game','s-shop','s-lvl','s-over'];
 function showScreen(id){
@@ -290,7 +299,7 @@ function showScreen(id){
   });
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════��═══════
    USER DB
 ═══════════════════════════════════════ */
 var DB={},ME=null;
@@ -482,30 +491,22 @@ function updateActBar(){
   if(!G)return;
   var active=Object.keys(G.act).filter(function(k){return G.act[k];});
   var actEl=document.getElementById('g-act-cell');
-  var bar=document.getElementById('g-actbar');
-  var W=window.innerWidth, TOTAL=window.innerHeight, HUD_H=44, CTRL_H=58;
   if(!active.length){
-    actEl.style.display='none';actEl.style.height='0px';
-    var ch=TOTAL-HUD_H-CTRL_H;if(ch<60)ch=60;
-    document.getElementById('g-canvas-cell').style.height=ch+'px';
-    if(G){document.getElementById('gc').height=ch;}
+    actEl.style.display='none';
+    actEl.style.height='0px';
     return;
   }
   actEl.style.display='block';
+  actEl.style.height='auto';
+  var bar=document.getElementById('g-actbar');
   bar.style.display='flex';
   bar.innerHTML=active.map(function(id){var b=BID(id)||{em:'?',nm:'?',cl:'#fff'};return'<span class="apill" style="background:'+b.cl+'20;border:1.5px solid '+b.cl+'55;color:'+b.cl+'">'+b.em+' '+b.nm+'</span>';}).join('');
-  /* Recalc canvas height to fit actbar */
-  var ah=actEl.offsetHeight||28;
-  var ch=TOTAL-HUD_H-CTRL_H-ah;if(ch<60)ch=60;
-  document.getElementById('g-canvas-cell').style.height=ch+'px';
-  if(G){document.getElementById('gc').height=ch;}
 }
 
 /* ═══════════════════════════════════════
-   LEVEL CARD  (idx = completed stage)
+   LEVEL CARD
 ═══════════════════════════════════════ */
 function showLevelCard(data){
-  /* data.level = next level to play. Completed stage index = data.level - 1 */
   var idx=Math.max(0,Math.min(data.level-1,ST.length-1));
   var st=ST[idx];
   document.getElementById('lv-card').style.borderColor=st.ac+'40';
@@ -614,52 +615,18 @@ function startGame(level){
   if(!ME)return;
   PAUSED=false;closeDrawer();
   document.getElementById('g-pbtn').textContent='⏸';
-  document.getElementById('g-actbar').style.display='none';
-  document.getElementById('g-act-cell').style.display='none';
 
-  /* JS-driven layout: set ALL heights explicitly in pixels */
-  var W = window.innerWidth;
-  var TOTAL = window.innerHeight;
-  var HUD_H = 44;   /* px */
-  var CTRL_H = 58;  /* px */
-  var ACT_H = 0;    /* hidden initially */
-  var CANVAS_H = TOTAL - HUD_H - CTRL_H - ACT_H;
-  if(CANVAS_H < 60) CANVAS_H = 60;
-
-  /* Apply px sizes to every game div */
-  var gameEl = document.getElementById('s-game');
-  gameEl.style.width  = W + 'px';
-  gameEl.style.height = TOTAL + 'px';
-
-  var hudEl = document.getElementById('g-hud-cell');
-  hudEl.style.width  = W + 'px';
-  hudEl.style.height = HUD_H + 'px';
-
-  var actEl = document.getElementById('g-act-cell');
-  actEl.style.width  = W + 'px';
-  actEl.style.height = '0px';
-  actEl.style.display = 'none';
-
-  var canvasCell = document.getElementById('g-canvas-cell');
-  canvasCell.style.width  = W + 'px';
-  canvasCell.style.height = CANVAS_H + 'px';
-
-  var ctrlEl = document.getElementById('g-ctrl-cell');
-  ctrlEl.style.width  = W + 'px';
-  ctrlEl.style.height = CTRL_H + 'px';
-
-  /* Show game screen */
   showScreen('s-game');
 
+  var W=window.innerWidth,H=window.innerHeight;
   var cv=document.getElementById('gc');
-  cv.width=W;cv.height=CANVAS_H;
-  var H=CANVAS_H;
+  cv.width=W;cv.height=H-102;
+  var canH=H-102;
   var ctx=cv.getContext('2d');
-  var S=W/800,GY=H-Math.round(58*S);
+  var S=W/800,GY=canH-Math.round(58*S);
   var st=ST[Math.min(level,ST.length-1)];
   var lv=makeLevel(level,GY);
 
-  /* Style HUD for this stage */
   document.getElementById('g-hud-cell').style.borderBottomColor=st.ac+'30';
   document.getElementById('g-fill').style.background='linear-gradient(90deg,'+st.pl+','+st.ac+')';
   document.getElementById('g-fill').style.boxShadow='0 0 6px '+st.ac+'70';
@@ -704,7 +671,7 @@ function startGame(level){
       });
     }
     if(land){p.gr=true;p.coy=7;}else if(!p.dead)p.gr=false;
-    if(!p.dead&&p.y>H+80){p.dead=true;p.dt=0;g.lives=Math.max(0,g.lives-1);updateLives();}
+    if(!p.dead&&p.y>canH+80){p.dead=true;p.dt=0;g.lives=Math.max(0,g.lives-1);updateLives();}
 
     if(p.dead){
       p.dt++;
@@ -763,7 +730,7 @@ function startGame(level){
 
   function render(){
     var g=G,p=g.p,lv2=g.lv,cam=g.cam,gl=cam-50,gr2=cam+W+50;
-    var sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,st.bg[0]);sky.addColorStop(1,st.bg[1]);ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+    var sky=ctx.createLinearGradient(0,0,0,canH);sky.addColorStop(0,st.bg[0]);sky.addColorStop(1,st.bg[1]);ctx.fillStyle=sky;ctx.fillRect(0,0,W,canH);
     if(level<8){ctx.save();ctx.fillStyle='#fff9c4';ctx.shadowBlur=26*S;ctx.shadowColor='#ffee58';ctx.beginPath();ctx.arc(W*.78,42*S,16*S,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.restore();}
     else{ctx.save();ctx.fillStyle='#cfd8dc';ctx.shadowBlur=14*S;ctx.shadowColor='#90a4ae';ctx.beginPath();ctx.arc(W*.78,42*S,13*S,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.restore();}
     if(level<9){ctx.fillStyle='rgba(255,255,255,.4)';for(var i=0;i<5;i++){var bx=((i*190-cam*.07)%(W+220)+W+220)%(W+220)-60,by=(22+i*15)*S;ctx.beginPath();ctx.ellipse(bx,by,(40+i*9)*S,13*S,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(bx+22*S,by-8*S,20*S,10*S,0,0,Math.PI*2);ctx.fill();}}
@@ -771,8 +738,8 @@ function startGame(level){
     ctx.save();ctx.translate(-cam,0);
     ctx.fillStyle=st.gr;var gx=gl;
     var vg=lv2.gaps.filter(function(ga){return(ga.x+ga.w)*S>gl&&ga.x*S<gr2;});
-    vg.forEach(function(ga){var gxS=ga.x*S,gwS=ga.w*S;if(gx<gxS)ctx.fillRect(gx,GY,gxS-gx,H-GY);gx=gxS+gwS;});
-    if(gx<gr2)ctx.fillRect(gx,GY,gr2-gx,H-GY);
+    vg.forEach(function(ga){var gxS=ga.x*S,gwS=ga.w*S;if(gx<gxS)ctx.fillRect(gx,GY,gxS-gx,canH-GY);gx=gxS+gwS;});
+    if(gx<gr2)ctx.fillRect(gx,GY,gr2-gx,canH-GY);
     ctx.fillStyle=st.pl;ctx.fillRect(gl,GY,gr2-gl,5*S);
     ctx.fillStyle=st.pl+'bb';for(var i=0;i<30;i++){var tx=gl+i*50*S+(i*37%22)*S;if(!vg.some(function(ga){return tx>ga.x*S-5&&tx<(ga.x+ga.w)*S+5;}))ctx.fillRect(tx,GY-4*S,5*S,5*S);}
     lv2.plats.forEach(function(pl){if(pl.grnd)return;var px=pl.x*S,py2=pl.y*S,pw=pl.w*S,ph=pl.h*S;if(px+pw<gl||px>gr2)return;ctx.fillStyle='rgba(0,0,0,.22)';ctx.fillRect(px+3*S,py2+ph,pw-6*S,4*S);ctx.shadowBlur=6*S;ctx.shadowColor=st.pl+'80';ctx.fillStyle=st.pl;ctx.beginPath();ctx.roundRect(px,py2,pw,ph,4);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,255,.18)';ctx.fillRect(px+4*S,py2+2*S,pw-8*S,3*S);});
@@ -784,11 +751,11 @@ function startGame(level){
     g.pts.forEach(function(pt){ctx.globalAlpha=pt.l/pt.ml;ctx.fillStyle=pt.c;ctx.beginPath();ctx.arc(pt.x,pt.y,3*(pt.l/pt.ml)*S,0,Math.PI*2);ctx.fill();});ctx.globalAlpha=1;
     drawFemale(ctx,p,S,g.act);
     ctx.restore();
-    var vig=ctx.createRadialGradient(W/2,H/2,H*.2,W/2,H/2,H*.88);vig.addColorStop(0,'transparent');vig.addColorStop(1,'rgba(0,0,0,.28)');ctx.fillStyle=vig;ctx.fillRect(0,0,W,H);
-    if(p.dead){ctx.fillStyle='rgba(180,0,0,'+Math.min(p.dt/40,.5)+')';ctx.fillRect(0,0,W,H);if(p.dt>30){ctx.fillStyle='#fff';ctx.font='bold '+Math.round(22*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=12;ctx.shadowColor='#c62828';ctx.fillText(g.lives>0?'Keep going...':'Game Over',W/2,H/2);ctx.shadowBlur=0;ctx.textAlign='left';}}
-    if(g.done){ctx.fillStyle='rgba(0,0,0,'+Math.min(g.doneT/25,.8)*.6+')';ctx.fillRect(0,0,W,H);if(g.doneT>16){ctx.fillStyle=st.ac;ctx.font='bold '+Math.round(26*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=20;ctx.shadowColor=st.ac;ctx.fillText('Level Complete!',W/2,H/2-18*S);ctx.font=Math.round(13*S)+'px system-ui';ctx.fillStyle='rgba(255,255,255,.85)';ctx.shadowBlur=0;ctx.fillText(st.sk,W/2,H/2+8*S);ctx.textAlign='left';}}
+    var vig=ctx.createRadialGradient(W/2,canH/2,canH*.2,W/2,canH/2,canH*.88);vig.addColorStop(0,'transparent');vig.addColorStop(1,'rgba(0,0,0,.28)');ctx.fillStyle=vig;ctx.fillRect(0,0,W,canH);
+    if(p.dead){ctx.fillStyle='rgba(180,0,0,'+Math.min(p.dt/40,.5)+')';ctx.fillRect(0,0,W,canH);if(p.dt>30){ctx.fillStyle='#fff';ctx.font='bold '+Math.round(22*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=12;ctx.shadowColor='#c62828';ctx.fillText(g.lives>0?'Keep going...':'Game Over',W/2,canH/2);ctx.shadowBlur=0;ctx.textAlign='left';}}
+    if(g.done){ctx.fillStyle='rgba(0,0,0,'+Math.min(g.doneT/25,.8)*.6+')';ctx.fillRect(0,0,W,canH);if(g.doneT>16){ctx.fillStyle=st.ac;ctx.font='bold '+Math.round(26*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=20;ctx.shadowColor=st.ac;ctx.fillText('Level Complete!',W/2,canH/2-18*S);ctx.font=Math.round(13*S)+'px system-ui';ctx.fillStyle='rgba(255,255,255,.85)';ctx.shadowBlur=0;ctx.fillText(st.sk,W/2,canH/2+8*S);ctx.textAlign='left';}}
   }
-  function drawPaused(){render();ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.font='bold '+Math.round(34*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=16;ctx.shadowColor='rgba(100,200,255,.5)';ctx.fillText('Paused',W/2,H/2-14*S);ctx.font=Math.round(13*S)+'px system-ui';ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,255,.45)';ctx.fillText('Tap ⏸ or press P to resume',W/2,H/2+16*S);ctx.textAlign='left';}
+  function drawPaused(){render();ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,0,W,canH);ctx.fillStyle='#fff';ctx.font='bold '+Math.round(34*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=16;ctx.shadowColor='rgba(100,200,255,.5)';ctx.fillText('Paused',W/2,canH/2-14*S);ctx.font=Math.round(13*S)+'px system-ui';ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,255,.45)';ctx.fillText('Tap ⏸ or press P to resume',W/2,canH/2+16*S);ctx.textAlign='left';}
   RAF=requestAnimationFrame(tick);
 }
 
