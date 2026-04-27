@@ -4,29 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>The Loop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-serif;background:#07120a;color:#f0f4f0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Exo 2',system-ui,sans-serif;background:#07120a;color:#f0f4f0}
 .page{display:none;width:100vw;height:100vh;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto}
 .page.on{display:flex}
 
 /* ── AUTH ── */
 #pg-auth{background:linear-gradient(170deg,#0f2612 0%,#07120a 70%);padding:24px 20px;gap:0}
 .logo{text-align:center;margin-bottom:28px}
-.logo h1{font-size:56px;font-weight:900;color:#7cb342;letter-spacing:-3px;line-height:.88;text-shadow:0 0 40px rgba(124,179,66,.5)}
-.logo sub{display:block;font-size:9px;font-weight:700;letter-spacing:5px;color:rgba(124,179,66,.45);margin-top:9px;text-transform:uppercase}
+.logo h1{font-size:56px;font-weight:900;color:#7cb342;letter-spacing:-3px;line-height:.88;text-shadow:0 0 40px rgba(124,179,66,.5);font-family:'Orbitron',monospace}
+.logo sub{display:block;font-size:9px;font-weight:700;letter-spacing:5px;color:rgba(124,179,66,.45);margin-top:9px;text-transform:uppercase;font-family:'Orbitron',monospace}
 .acard{width:100%;max-width:390px;background:rgba(255,255,255,.04);border:1.5px solid rgba(124,179,66,.22);border-radius:20px;overflow:hidden}
 .atabs{display:flex;border-bottom:1px solid rgba(255,255,255,.07)}
-.atab{flex:1;padding:13px 6px;background:transparent;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,.35);font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.atab{flex:1;padding:13px 6px;background:transparent;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,.35);font-size:10px;font-weight:700;letter-spacing:2px;cursor:pointer;text-transform:uppercase;transition:all .2s;font-family:'Orbitron',monospace}
 .atab.on{color:#7cb342;background:rgba(124,179,66,.08);border-bottom-color:#7cb342}
 .aform{padding:22px;display:flex;flex-direction:column;gap:14px}
-.afield label{display:block;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:7px;text-transform:uppercase}
+.afield label{display:block;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.4);margin-bottom:7px;text-transform:uppercase;font-family:'Orbitron',monospace}
 .afield input{width:100%;padding:13px 14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(124,179,66,.2);border-radius:11px;color:#fff;font-size:16px;outline:none}
 .afield input:focus{border-color:#7cb342;box-shadow:0 0 0 3px rgba(124,179,66,.15)}
 .amsg{padding:11px 14px;border-radius:10px;font-size:13px;font-weight:500;display:none}
 .amsg.err{background:rgba(239,83,80,.1);border:1.5px solid rgba(239,83,80,.3);color:#ff8a80}
 .amsg.ok{background:rgba(76,175,80,.1);border:1.5px solid rgba(76,175,80,.25);color:#a5d6a7}
-.abtn{width:100%;padding:15px;font-size:15px;font-weight:800;letter-spacing:2px;border:none;border-radius:11px;cursor:pointer;background:linear-gradient(135deg,#7cb342,#4caf50);color:#071209;margin-top:4px}
+.abtn{width:100%;padding:15px;font-size:14px;font-weight:800;letter-spacing:2px;border:none;border-radius:11px;cursor:pointer;background:linear-gradient(135deg,#7cb342,#4caf50);color:#071209;margin-top:4px;font-family:'Orbitron',monospace}
 .abtn:active{opacity:.85}
 .aswitch{text-align:center;padding:14px;color:rgba(255,255,255,.28);font-size:12px}
 .aswitch a{color:#7cb342;cursor:pointer;font-weight:600}
@@ -35,83 +37,94 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 /* ── TITLE ── */
 #pg-title{background:linear-gradient(170deg,#122016 0%,#07120a 70%);padding:24px 20px;gap:16px}
 .ubar{display:flex;align-items:center;gap:12px;background:rgba(124,179,66,.07);border:1.5px solid rgba(124,179,66,.18);border-radius:40px;padding:8px 16px 8px 10px;width:100%;max-width:420px}
-.uav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7cb342,#4caf50);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#071209;flex-shrink:0}
+.uav{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7cb342,#4caf50);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#071209;flex-shrink:0;font-family:'Orbitron',monospace}
 .uinfo{flex:1;min-width:0}
-.uname{color:#7cb342;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uname{color:#7cb342;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Orbitron',monospace}
 .ustats{color:rgba(255,255,255,.38);font-size:11px;margin-top:1px}
-.ulg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.38);padding:5px 12px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0}
+.ulg{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.38);padding:5px 12px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;font-family:'Orbitron',monospace;letter-spacing:1px}
 .t-hero{text-align:center}
-.t-hero h1{font-size:clamp(50px,13vw,72px);font-weight:900;color:#7cb342;letter-spacing:-3px;line-height:.88;text-shadow:0 0 50px rgba(124,179,66,.45)}
-.t-hero p{color:rgba(124,179,66,.4);font-size:9px;font-weight:700;letter-spacing:6px;text-transform:uppercase;margin-top:10px}
+.t-hero h1{font-size:clamp(50px,13vw,72px);font-weight:900;color:#7cb342;letter-spacing:-3px;line-height:.88;text-shadow:0 0 50px rgba(124,179,66,.45);font-family:'Orbitron',monospace}
+.t-hero p{color:rgba(124,179,66,.4);font-size:9px;font-weight:700;letter-spacing:6px;text-transform:uppercase;margin-top:10px;font-family:'Orbitron',monospace}
 .t-keys{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:420px}
 .tkey{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px 12px}
-.tkey b{display:block;color:rgba(255,255,255,.7);font-size:12px;margin-bottom:2px}
+.tkey b{display:block;color:rgba(255,255,255,.7);font-size:12px;margin-bottom:2px;font-family:'Orbitron',monospace}
 .tkey span{color:rgba(255,255,255,.38);font-size:11px}
 .t-btns{display:flex;gap:10px;width:100%;max-width:420px}
-.t-play{flex:1;padding:16px;font-size:16px;font-weight:800;letter-spacing:2px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#7cb342,#4caf50);color:#071209}
+.t-play{flex:1;padding:16px;font-size:15px;font-weight:800;letter-spacing:2px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#7cb342,#4caf50);color:#071209;font-family:'Orbitron',monospace}
 .t-play:active{opacity:.88}
 .t-shop{background:rgba(255,193,7,.1);border:1.5px solid rgba(255,193,7,.3);color:#ffc107;padding:16px 20px;border-radius:12px;font-size:22px;cursor:pointer}
-.t-footer{color:rgba(255,255,255,.12);font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.t-footer{color:rgba(255,255,255,.12);font-size:9px;letter-spacing:2px;text-transform:uppercase;font-family:'Orbitron',monospace}
 
 /* ── GAME ── */
 #pg-game{background:#000;padding:0;justify-content:flex-start;align-items:stretch;overflow:hidden;gap:0}
-#hud{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.92);padding:6px 12px;width:100%;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07);min-height:52px}
-#hlives{display:flex;gap:1px;font-size:14px}
-#hprog{flex:1;min-width:0}
-#hsname{font-size:8px;color:rgba(255,255,255,.32);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:600}
-#hbar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
-#hfill{height:100%;width:0%;border-radius:3px}
-#hcoins{color:#ffc107;font-size:13px;font-weight:700;flex-shrink:0}
-#hscore{color:#26c6da;font-size:12px;font-weight:700;flex-shrink:0;min-width:32px;text-align:right}
-.hhbtn{padding:4px 9px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;flex-shrink:0;background:transparent}
+
+/* HUD bar */
+#hud{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.94);padding:5px 14px;width:100%;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07);min-height:48px}
+#hlives{display:flex;gap:2px;font-size:15px;flex-shrink:0}
+#hprog{flex:1;min-width:0;max-width:260px}
+#hsname{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:1.5px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:700;font-family:'Orbitron',monospace}
+#hbar{height:6px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+#hfill{height:100%;width:0%;border-radius:4px;transition:width .1s linear}
+/* Coin + score group */
+.hud-stat{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:3px 10px;flex-shrink:0}
+.hud-stat-val{font-size:13px;font-weight:800;line-height:1.2;font-family:'Orbitron',monospace}
+.hud-stat-lbl{font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.45;font-family:'Orbitron',monospace}
+/* Separator spacer */
+.hud-sep{flex:1}
+/* HUD buttons */
+.hhbtn{padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid;flex-shrink:0;background:transparent;font-family:'Orbitron',monospace;letter-spacing:.5px;white-space:nowrap}
 
 /* Active boosts strip */
-#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 12px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0}
-.act-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:10px;font-weight:700}
+#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 14px;background:rgba(0,0,0,.82);width:100%;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.05)}
+.act-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;font-family:'Orbitron',monospace}
 
-/* Canvas wrapper - flex:1 fills all space between HUD and ctrl */
+/* Canvas wrapper */
 #cw{flex:1;width:100%;overflow:hidden;position:relative;min-height:0;background:#000}
 canvas{display:block;touch-action:none}
 
 /* Bottom controls */
-#ctrl{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;width:100%;flex-shrink:0;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);gap:10px;min-height:66px}
-.cmb{width:54px;height:46px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
-.cmb:active{background:rgba(255,255,255,.18)}
+#ctrl{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;width:100%;flex-shrink:0;background:rgba(0,0,0,.92);border-top:1px solid rgba(255,255,255,.07);gap:10px;min-height:64px}
+.ctrl-left{display:flex;gap:8px;align-items:center}
+.ctrl-right{display:flex;gap:8px;align-items:center}
+.cmb{width:52px;height:48px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.8);touch-action:none;user-select:none}
+.cmb:active{background:rgba(255,255,255,.2);transform:scale(.94)}
 
-/* ── INVENTORY BUTTON (big, obvious, centered) ── */
-#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:78px;height:46px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
-#inv-btn:active{background:rgba(124,179,66,.25)}
+/* Inventory button */
+#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:72px;height:48px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.5);color:#7cb342;cursor:pointer;touch-action:none;user-select:none;transition:background .15s}
+#inv-btn:active{background:rgba(124,179,66,.28);transform:scale(.94)}
 #inv-btn .ie{font-size:20px;line-height:1}
-#inv-btn .it{font-size:9px;font-weight:700;line-height:1}
-#inv-count{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
+#inv-btn .it{font-size:8px;font-weight:800;line-height:1;font-family:'Orbitron',monospace;letter-spacing:.5px}
+#inv-count{position:absolute;top:-7px;right:-7px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000;font-family:'Orbitron',monospace}
 #inv-count.show{display:flex}
-#jbtn{height:46px;padding:0 20px;min-width:92px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
-#jbtn:active{opacity:.8}
 
-/* ── INVENTORY DRAWER (slides up from bottom of canvas area) ── */
-#inv-drawer{position:absolute;left:8px;right:8px;bottom:8px;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:18px;padding:14px;z-index:20;transform:translateY(110%);transition:transform .25s ease;max-height:58%;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+/* Jump button */
+#jbtn{height:48px;padding:0 24px;min-width:96px;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer;border:2px solid;letter-spacing:2px;touch-action:none;user-select:none;font-family:'Orbitron',monospace}
+#jbtn:active{opacity:.8;transform:scale(.95)}
+
+/* Inventory drawer */
+#inv-drawer{position:absolute;left:8px;right:8px;bottom:8px;background:#0d1f12;border:1.5px solid rgba(124,179,66,.35);border-radius:18px;padding:14px;z-index:20;transform:translateY(110%);transition:transform .25s ease;max-height:58%;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.5)}
 #inv-drawer.open{transform:translateY(0)}
-.id-title{font-size:13px;font-weight:700;color:#7cb342;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.id-close{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.45);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}
+.id-title{font-size:12px;font-weight:800;color:#7cb342;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;font-family:'Orbitron',monospace;letter-spacing:.5px}
+.id-close{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.45);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600}
 .id-slots{display:flex;flex-wrap:wrap;gap:10px}
 .id-slot{display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;cursor:pointer;min-width:72px;touch-action:none;user-select:none;transition:all .15s}
 .id-slot:active{transform:scale(.92);background:rgba(255,255,255,.14)}
 .id-slot .se{font-size:28px;line-height:1}
-.id-slot .sn{font-size:10px;font-weight:700;text-align:center;margin-top:2px}
+.id-slot .sn{font-size:10px;font-weight:700;text-align:center;margin-top:2px;font-family:'Orbitron',monospace}
 .id-slot .sd{font-size:9px;color:rgba(255,255,255,.38);text-align:center}
-.id-empty{color:rgba(255,255,255,.35);font-size:13px;text-align:center;padding:16px 0}
+.id-empty{color:rgba(255,255,255,.35);font-size:12px;text-align:center;padding:16px 0;font-family:'Orbitron',monospace}
 
 /* ── TOAST ── */
-#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(15,30,18,.97);border:1.5px solid rgba(124,179,66,.35);border-radius:999px;padding:9px 22px;font-size:13px;font-weight:600;color:#fff;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(15,30,18,.97);border:1.5px solid rgba(124,179,66,.4);border-radius:999px;padding:9px 22px;font-size:12px;font-weight:700;color:#fff;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;font-family:'Orbitron',monospace;letter-spacing:.5px}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── SHOP ── */
 #pg-shop{background:linear-gradient(170deg,#1a1400 0%,#0a0a00 100%);padding:20px;align-items:flex-start;overflow-y:auto;justify-content:flex-start}
 .sh-inner{max-width:500px;width:100%;margin:0 auto}
 .sh-top{text-align:center;margin-bottom:20px;padding-top:6px}
-.sh-top h2{font-size:22px;font-weight:900;color:#ffc107;letter-spacing:2px;margin:6px 0}
-.sh-wallet{background:rgba(255,193,7,.1);border:1.5px solid rgba(255,193,7,.28);border-radius:999px;display:inline-flex;align-items:center;gap:6px;padding:7px 22px;color:#ffc107;font-size:16px;font-weight:800}
-.sh-sec{font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.38);text-transform:uppercase;margin-bottom:10px}
+.sh-top h2{font-size:22px;font-weight:900;color:#ffc107;letter-spacing:2px;margin:6px 0;font-family:'Orbitron',monospace}
+.sh-wallet{background:rgba(255,193,7,.1);border:1.5px solid rgba(255,193,7,.28);border-radius:999px;display:inline-flex;align-items:center;gap:6px;padding:7px 22px;color:#ffc107;font-size:16px;font-weight:800;font-family:'Orbitron',monospace}
+.sh-sec{font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.38);text-transform:uppercase;margin-bottom:10px;font-family:'Orbitron',monospace}
 .boo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
 .boo-card{border-radius:14px;padding:14px;cursor:pointer}
 .boo-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -133,32 +146,32 @@ canvas{display:block;touch-action:none}
 #pg-lvl{background:rgba(0,0,0,.96);padding:24px 20px;justify-content:center;overflow-y:auto}
 .lv-card{max-width:430px;width:100%;background:#111d14;border-radius:22px;overflow:hidden;border:2px solid rgba(255,255,255,.07)}
 .lv-top{padding:24px 22px 18px;text-align:center}
-.lv-badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.lv-badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Orbitron',monospace}
 .lv-icon{font-size:52px;margin:6px 0}
-.lv-stagename{font-size:22px;font-weight:900}
-.lv-stagesub{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.5;margin-top:4px}
+.lv-stagename{font-size:22px;font-weight:900;font-family:'Orbitron',monospace}
+.lv-stagesub{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.5;margin-top:4px;font-family:'Orbitron',monospace}
 .lv-skill{margin:0 20px 18px;border-radius:14px;padding:16px;border:1.5px solid}
-.lv-skill-lbl{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;opacity:.5;margin-bottom:6px}
-.lv-skill-name{font-size:17px;font-weight:900;margin-bottom:6px}
+.lv-skill-lbl{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;opacity:.5;margin-bottom:6px;font-family:'Orbitron',monospace}
+.lv-skill-name{font-size:17px;font-weight:900;margin-bottom:6px;font-family:'Orbitron',monospace}
 .lv-skill-desc{font-size:12px;line-height:1.6;opacity:.7}
 .lv-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 20px 18px}
 .lv-stat{background:rgba(0,0,0,.4);border-radius:11px;padding:12px;text-align:center}
-.lv-sv{font-size:18px;font-weight:900}
-.lv-sl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.4;margin-top:3px}
+.lv-sv{font-size:18px;font-weight:900;font-family:'Orbitron',monospace}
+.lv-sl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.4;margin-top:3px;font-family:'Orbitron',monospace}
 .lv-acts{padding:0 20px 20px;display:flex;flex-direction:column;gap:9px}
-.btn-main{width:100%;padding:15px;font-size:14px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:1px}
-.btn-sec{width:100%;padding:13px;font-size:13px;font-weight:600;border-radius:12px;cursor:pointer;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5)}
+.btn-main{width:100%;padding:15px;font-size:13px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:2px;font-family:'Orbitron',monospace}
+.btn-sec{width:100%;padding:13px;font-size:12px;font-weight:600;border-radius:12px;cursor:pointer;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);font-family:'Orbitron',monospace;letter-spacing:1px}
 
 /* ── GAME OVER ── */
 #pg-over{background:rgba(0,0,0,.97);padding:24px 20px;justify-content:center;overflow-y:auto}
 .ov-card{max-width:400px;width:100%;background:#111d14;border-radius:22px;padding:28px 22px;border:2px solid rgba(255,255,255,.07)}
 .ov-icon{font-size:46px;text-align:center;margin-bottom:8px}
-.ov-title{font-size:22px;font-weight:900;text-align:center;margin-bottom:4px}
-.ov-sub{font-size:10px;text-align:center;opacity:.38;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+.ov-title{font-size:22px;font-weight:900;text-align:center;margin-bottom:4px;font-family:'Orbitron',monospace;letter-spacing:1px}
+.ov-sub{font-size:10px;text-align:center;opacity:.38;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;font-family:'Orbitron',monospace}
 .ov-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
 .ov-stat{background:rgba(0,0,0,.4);border-radius:11px;padding:12px;text-align:center}
-.ov-sv{font-size:18px;font-weight:900}
-.ov-sl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.38;margin-top:3px}
+.ov-sv{font-size:18px;font-weight:900;font-family:'Orbitron',monospace}
+.ov-sl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.38;margin-top:3px;font-family:'Orbitron',monospace}
 .ov-acts{display:flex;flex-direction:column;gap:9px}
 </style>
 </head>
@@ -212,16 +225,16 @@ canvas{display:block;touch-action:none}
   <div id="hud">
     <div id="hlives"></div>
     <div id="hprog"><div id="hsname">-</div><div id="hbar"><div id="hfill"></div></div></div>
-    <div id="hcoins">🪙 0</div>
-    <div id="hscore">0</div>
-    <button class="hhbtn" id="hshopbtn" onclick="openShop('game')" style="color:#ffc107;border-color:rgba(255,193,7,.3)">🛒</button>
-    <button class="hhbtn" id="hquitbtn" onclick="quitGame()" style="color:rgba(255,100,100,.7);border-color:rgba(255,100,100,.25)">✕ Quit</button>
-    <button class="hhbtn" id="hpausebtn" onclick="togglePause()" style="color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.15)">⏸</button>
+    <div class="hud-sep"></div>
+    <div class="hud-stat"><span class="hud-stat-val" id="hcoins" style="color:#ffc107">🪙 0</span><span class="hud-stat-lbl">Coins</span></div>
+    <div class="hud-stat"><span class="hud-stat-val" id="hscore" style="color:#26c6da">0</span><span class="hud-stat-lbl">Score</span></div>
+    <button class="hhbtn" id="hshopbtn" onclick="openShop('game')" style="color:#ffc107;border-color:rgba(255,193,7,.35)">🛒</button>
+    <button class="hhbtn" id="hpausebtn" onclick="togglePause()" style="color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.18)">⏸</button>
+    <button class="hhbtn" id="hquitbtn" onclick="quitGame()" style="color:rgba(255,100,100,.8);border-color:rgba(255,100,100,.3)">✕ Quit</button>
   </div>
   <div id="act-bar"></div>
   <div id="cw">
     <canvas id="gc"></canvas>
-    <!-- Inventory Drawer -->
     <div id="inv-drawer">
       <div class="id-title">
         <span>🎒 Your Boosts — tap to activate</span>
@@ -231,11 +244,11 @@ canvas{display:block;touch-action:none}
     </div>
   </div>
   <div id="ctrl">
-    <div style="display:flex;gap:7px">
+    <div class="ctrl-left">
       <button class="cmb" id="btnL">◀</button>
       <button class="cmb" id="btnR">▶</button>
     </div>
-    <div style="display:flex;gap:7px;align-items:center">
+    <div class="ctrl-right">
       <div id="inv-btn" onclick="toggleDrawer()">
         <div id="inv-count">0</div>
         <span class="ie">🎒</span>
@@ -886,8 +899,7 @@ function startGame(level){
     g.pts=g.pts.filter(function(pt){pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=.12;pt.l--;return pt.l>0;});
     document.getElementById('hfill').style.width=Math.min(p.x/lv2.end,1)*100+'%';
     document.getElementById('hcoins').textContent='🪙 '+g.got;
-    document.getElementById('hscore').textContent=g.score;
-    render();
+    document.getElementById('hscore').textContent=g.score;    render();
   }
 
   function addPts(x,y,n,col){for(var i=0;i<n;i++)G.pts.push({x:x,y:y,vx:(Math.random()-.5)*6*S,vy:(Math.random()-.5)*6*S-S,l:22,ml:22,c:col});}
