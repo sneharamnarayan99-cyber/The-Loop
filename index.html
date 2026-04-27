@@ -60,6 +60,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Exo 2',system-ui,s
 
 /* ── HUD: 3-zone layout — left:lives|stage, center:progress, right:coins|score|btns ── */
 #hud{
+  position:relative;
+  z-index:20;
   display:grid;
   grid-template-columns:1fr auto 1fr;
   align-items:center;
@@ -88,15 +90,17 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Exo 2',system-ui,s
 .hhbtn{padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;cursor:pointer;border:1.5px solid;flex-shrink:0;background:transparent;font-family:'Orbitron',monospace;letter-spacing:.5px;white-space:nowrap;line-height:1}
 
 /* Active boosts strip */
-#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 14px;background:rgba(0,0,0,.85);width:100%;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
+#act-bar{display:none;position:relative;z-index:20;flex-wrap:wrap;gap:5px;padding:4px 14px;background:rgba(0,0,0,.85);width:100%;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
 .act-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:700;font-family:'Orbitron',monospace}
 
 /* Canvas wrapper */
-#cw{flex:1;width:100%;overflow:hidden;position:relative;min-height:0;background:#000}
+#cw{flex:1;width:100%;overflow:hidden;position:relative;z-index:1;min-height:0;background:#000}
 canvas{display:block;touch-action:none}
 
 /* ── CONTROLS: evenly spaced across full width ── */
 #ctrl{
+  position:relative;
+  z-index:20;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -508,12 +512,12 @@ var STAGES=[
 
 // ── BOOSTS: id, name, emoji, color, cost, description, duration(ms) ──
 var BT=[
-  {id:'shield',nm:'Shield',    em:'🛡️',cl:'#42a5f5',co:30,ds:'Absorbs one hit',   dur:8000},
-  {id:'fly',   nm:'Fly Wings', em:'🦋',cl:'#ce93d8',co:50,ds:'Float & low gravity',dur:5000},
-  {id:'magnet',nm:'Magnet',    em:'🧲',cl:'#ef9a9a',co:25,ds:'Auto-collect coins', dur:6000},
-  {id:'boots', nm:'Turbo Boots',em:'⚡',cl:'#ffcc02',co:20,ds:'Higher jumps',      dur:7000},
-  {id:'ghost', nm:'Ghost Mode',em:'👻',cl:'#b39ddb',co:40,ds:'Pass thru monsters', dur:6000},
-  {id:'star',  nm:'Star Power',em:'⭐',cl:'#fff176',co:60,ds:'Invincible & fast',  dur:5000},
+  {id:'shield',nm:'Shield',    em:'🛡️',cl:'#42a5f5',co:30,ds:'Absorbs one hit',   dur:10000},
+  {id:'fly',   nm:'Fly Wings', em:'🦋',cl:'#ce93d8',co:50,ds:'Float & low gravity',dur:10000},
+  {id:'magnet',nm:'Magnet',    em:'🧲',cl:'#ef9a9a',co:25,ds:'Auto-collect coins', dur:10000},
+  {id:'boots', nm:'Turbo Boots',em:'⚡',cl:'#ffcc02',co:20,ds:'Higher jumps',      dur:10000},
+  {id:'ghost', nm:'Ghost Mode',em:'👻',cl:'#b39ddb',co:40,ds:'Pass thru monsters', dur:10000},
+  {id:'star',  nm:'Star Power',em:'⭐',cl:'#fff176',co:60,ds:'Invincible & fast',  dur:10000},
   {id:'life',  nm:'Extra Life',em:'❤️',cl:'#ef5350',co:45,ds:'+1 life (max 5)',    dur:0   },
 ];
 function BID(id){ for(var i=0;i<BT.length;i++) if(BT[i].id===id) return BT[i]; return null; }
@@ -767,10 +771,11 @@ function togglePause(){
 }
 function quitGame(){
   if(!G) return;
-  if(!confirm('Quit this level? Your coins will be saved.')) return;
   cancelAnimationFrame(RAF);
   ME.coins=G.wallet; ME.best=Math.max(ME.best,G.score); ME.inv=G.inv.slice();
   G=null; PAUSED=false;
+  updateActBar();
+  toast('Level exited. Your progress was saved.');
   goTitle();
 }
 function updateLivesHUD(){
@@ -782,31 +787,50 @@ function updateLivesHUD(){
 // Level generator
 function makeLevel(lvl,GY){
   var seed=(lvl+1)*6271, rng=function(n){return((Math.sin(n*seed*0.731+n)*43758.5)%1+1)%1;};
-  var easy=lvl===0, diff=easy?0:lvl/11, len=easy?3600:5200+lvl*760;
+  var easy=lvl===0, diff=easy?0:lvl/11, len=easy?3000:4800+lvl*700;
   var plats=[],coins=[],monsters=[],hazards=[],boxes=[],gaps=[];
-  plats.push({x:0,y:GY,w:easy?620:420,h:72,grnd:true});
-  var cur=easy?620:420,ci=0;
+  // Smaller starter ground so the scene feels like a platformer, not a runway
+  plats.push({x:0,y:GY,w:easy?260:220,h:72,grnd:true});
+  var cur=easy?260:220,ci=0;
   while(cur<len){
     var r=function(n){return rng(ci*113+n);};
-    var gap=easy?70+r(1)*90:90+r(1)*(80+diff*120); cur+=gap;
-    var pw=easy?180+r(2)*90:Math.max(80,140+r(2)*90-diff*30);
-    var py=easy?GY-70-r(3)*110:GY-85-r(3)*(90+diff*100);
-    plats.push({x:cur,y:py,w:pw,h:14,grnd:false});
-    var cn=easy?1+Math.floor(r(4)*2):1+Math.floor(r(4)*3);
-    for(var c=0;c<cn;c++) coins.push({x:cur+(pw/(cn+1))*(c+1),y:py-40-r(c+5)*10,r:8,taken:false,bob:r(c+6)*Math.PI*2});
-    if(r(7)<(easy?.35:.28)) coins.push({x:cur+pw*0.5-r(8)*18,y:py-54-r(9)*10,r:8,taken:false,bob:r(10)*Math.PI*2});
+    // Wider spacing between floating platforms
+    var gap=easy?90+r(1)*90:110+r(1)*(110+diff*50); cur+=gap;
+    // Narrower platforms to match the visual reference
+    var pw=easy?80+r(2)*55:Math.max(60,70+r(2)*65-diff*10);
+    // Platforms float at varied heights, closer to the reference image
+    var py=easy?GY-(105+r(3)*55):GY-(95+r(3)*(75+diff*45));
+    plats.push({x:cur,y:py,w:pw,h:12,grnd:false});
+    // Fewer coins per platform, with looser placement
+    var cn=easy?2+Math.floor(r(4)*2):1+Math.floor(r(4)*3);
+    for(var c=0;c<cn;c++) coins.push({x:cur+(pw/(cn+1))*(c+1),y:py-20-r(c+5)*10,r:8,taken:false,bob:r(c+6)*Math.PI*2});
+    if(r(7)<(easy?.35:.28)) coins.push({x:cur+pw*0.5,y:py-36,r:8,taken:false,bob:r(8)*Math.PI*2});
     if(!easy){
-      if(ci>2&&r(11)<.16+diff*.18) monsters.push({x:cur+pw/2,y:py-18,bx:cur+8,rw:Math.max(pw-16,18),vx:(r(12)-.5)*(1+diff*1.4),tp:ci%5,ph:r(13)*Math.PI*2});
-      if(ci>4&&r(14)<.08+diff*.12) monsters.push({x:cur-gap*0.35,y:GY-18,bx:cur-gap*0.6,rw:Math.max(gap*0.55,24),vx:(r(15)-.5)*(1.1+diff*1.5),tp:(ci+2)%5,ph:r(16)*Math.PI*2});
-      if(ci>2&&r(17)<.12+diff*.16) hazards.push({type:'spike',x:cur+r(18)*(pw-22),y:py-22,w:22,h:22});
-      if(ci>3&&r(19)<.1+diff*.16) hazards.push({type:'spike',x:cur-12,y:GY-22,w:22,h:22});
-      if(lvl>=4&&r(20)<.1+diff*.14) hazards.push({type:'swamp',x:cur+r(21)*(Math.max(pw-50,10)),y:GY-10,w:42+r(22)*26,h:14});
-      if(lvl>=6&&r(23)<.07+diff*.1) hazards.push({type:'rock',x:cur+pw/2,y:-50,vy:0,on:true,w:18,h:18});
+      if(ci>1&&r(9)<.16+diff*.16) monsters.push({x:cur+pw/2,y:py-18,bx:cur+8,rw:Math.max(pw-16,10),vx:(r(11)-.5)*(1.2+diff*1.7),tp:ci%5,ph:r(12)*Math.PI*2});
+      if(ci>3&&r(13)<.08+diff*.12) monsters.push({x:cur-gap*.28,y:GY-18,bx:cur-gap*.35,rw:Math.max(gap*.55,10),vx:(r(15)-.5)*(1.4+diff*1.7),tp:(ci+2)%5,ph:r(16)*Math.PI*2});
+      if(ci>1&&r(17)<.12+diff*.12) hazards.push({type:'spike',x:cur+r(18)*(pw-22),y:py-22,w:22,h:22});
+      if(ci>2&&r(19)<.08+diff*.12) hazards.push({type:'spike',x:cur-12,y:GY-22,w:22,h:22});
+      if(lvl>=4&&r(20)<.08+diff*.12) hazards.push({type:'swamp',x:cur+r(21)*(pw-36),y:GY-10,w:36+r(22)*26,h:14});
+      if(lvl>=6&&r(23)<.06+diff*.08) hazards.push({type:'rock',x:cur+pw/2,y:-50,vy:0,on:true,w:18,h:18});
     }
-    if((easy&&ci%4===1)||(!easy&&ci%5===2&&r(24)<.38)) boxes.push({x:cur+pw/2,y:py-50,boost:BT[easy?2:Math.floor(r(25)*6)].id,hit:false});
+    if(easy?ci%4===1:ci%5===2&&r(24)<.42) boxes.push({x:cur+pw/2,y:py-44,boost:BT[easy?2:Math.floor(r(25)*6)].id,hit:false});
     cur+=pw+18; ci++;
   }
-  if(!easy){var gc=500,gi=0;while(gc<len-500){var grf=function(n){return rng(gi*61+n+333);};if(gi>0){var gw=42+grf(1)*(38+diff*44);gaps.push({x:gc,w:gw});gc+=gw+220+grf(2)*240;}else gc+=260+grf(2)*120;gi++;}}
+  if(!easy){
+    var gc=340,gi=0;
+    while(gc<len-420){
+      var grf=function(n){return rng(gi*61+n+333);};
+      if(gi>0){
+        // Larger holes so the player clearly falls through them
+        var gw=72+grf(1)*(58+diff*34);
+        gaps.push({x:gc,w:gw});
+        gc+=gw+140+grf(2)*(140+diff*40);
+      }else{
+        gc+=150+grf(2)*90;
+      }
+      gi++;
+    }
+  }
   return{plats:plats,coins:coins,monsters:monsters,hazards:hazards,boxes:boxes,gaps:gaps,end:len};
 }
 
@@ -882,7 +906,7 @@ function startGame(level){
     p.vy=Math.min(p.vy+(g.act.fly?.18:.52)*S,15*S); p.y+=p.vy;
 
     // Collision — one-way platforms (land from above only)
-    var inGap=function(){return lv2.gaps.some(function(ga){return p.x+10*S>ga.x&&p.x-10*S<(ga.x+ga.w);});};
+    var inGap=function(){return lv2.gaps.some(function(ga){return p.x+15*S>ga.x&&p.x-15*S<(ga.x+ga.w);});};
     var land=false;
     if(!p.dead){
       if(p.y+24*S>=GY&&p.vy>=0&&!inGap()){p.y=GY-24*S;p.vy=0;land=true;}
@@ -984,7 +1008,7 @@ function startGame(level){
     vg.forEach(function(ga){var gxS=ga.x,gwS=ga.w;if(gx<gxS)ctx.fillRect(gx,GY,gxS-gx,H-GY);gx=gxS+gwS;});
     if(gx<gr2)ctx.fillRect(gx,GY,gr2-gx,H-GY);
     ctx.fillStyle=st.pl;ctx.fillRect(gl,GY,gr2-gl,5*S);
-    ctx.fillStyle=st.pl+'bb';for(var i=0;i<18;i++){var tx=gl+i*88*S+(i*37%28)*S;if(!vg.some(function(ga){return tx>ga.x-5&&tx<(ga.x+ga.w)+5;}))ctx.fillRect(tx,GY-4*S,5*S,5*S);}
+    ctx.fillStyle=st.pl+'bb';for(var i=0;i<30;i++){var tx=gl+i*50*S+(i*37%22)*S;if(!vg.some(function(ga){return tx>ga.x-5&&tx<(ga.x+ga.w)+5;}))ctx.fillRect(tx,GY-4*S,5*S,5*S);}
     // Platforms
     lv2.plats.forEach(function(pl){
       if(pl.grnd)return;
