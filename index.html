@@ -54,8 +54,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 .t-footer{color:rgba(255,255,255,.12);font-size:9px;letter-spacing:2px;text-transform:uppercase}
 
 /* ── GAME ── */
-#pg-game{background:#000;padding:0;justify-content:flex-start;overflow:hidden;display:grid;grid-template-rows:56px minmax(0,1fr) 88px}
-#hud{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.92);padding:6px 14px;width:100%;height:56px;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07)}
+#pg-game{background:#000;padding:0;justify-content:flex-start;align-items:stretch;overflow:hidden;gap:0}
+#hud{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.92);padding:6px 12px;width:100%;flex-shrink:0;border-bottom:2px solid rgba(255,255,255,.07);min-height:52px}
 #hlives{display:flex;gap:1px;font-size:14px}
 #hprog{flex:1;min-width:0}
 #hsname{font-size:8px;color:rgba(255,255,255,.32);letter-spacing:1px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:600}
@@ -66,35 +66,34 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-seri
 .hhbtn{padding:4px 9px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;flex-shrink:0;background:transparent}
 
 /* Active boosts strip */
-#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:3px 11px 3px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0}
+#act-bar{display:none;flex-wrap:wrap;gap:5px;padding:4px 12px;background:rgba(0,0,0,.8);width:100%;flex-shrink:0}
 .act-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:10px;font-weight:700}
 
-/* Canvas */
-#cw{position:relative;flex:1;min-height:0;width:100%;overflow:hidden;display:block;background:#000}
-canvas{display:block;touch-action:none;width:100%;height:100%}
+/* Canvas wrapper - flex:1 fills all space between HUD and ctrl */
+#cw{flex:1;width:100%;overflow:hidden;position:relative;min-height:0;background:#000}
+canvas{display:block;touch-action:none}
 
 /* Bottom controls */
-#ctrl{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;width:100%;height:88px;flex-shrink:0;background:rgba(0,0,0,.94);border-top:1px solid rgba(255,255,255,.06);gap:16px}
-#ctrl>div{display:flex;gap:10px;align-items:center}
-.cmb{width:62px;height:54px;border-radius:14px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
+#ctrl{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;width:100%;flex-shrink:0;background:rgba(0,0,0,.9);border-top:1px solid rgba(255,255,255,.06);gap:10px;min-height:66px}
+.cmb{width:54px;height:46px;border-radius:12px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.13);color:rgba(255,255,255,.75);touch-action:none;user-select:none;font-weight:700}
 .cmb:active{background:rgba(255,255,255,.18)}
 
 /* ── INVENTORY BUTTON (big, obvious, centered) ── */
-#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:84px;height:54px;border-radius:14px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
+#inv-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:78px;height:46px;border-radius:12px;background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.45);color:#7cb342;cursor:pointer;touch-action:none;user-select:none}
 #inv-btn:active{background:rgba(124,179,66,.25)}
 #inv-btn .ie{font-size:20px;line-height:1}
 #inv-btn .it{font-size:9px;font-weight:700;line-height:1}
 #inv-count{position:absolute;top:-6px;right:-6px;background:#ef5350;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid #000}
 #inv-count.show{display:flex}
-#jbtn{height:54px;padding:0 26px;min-width:112px;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
+#jbtn{height:46px;padding:0 20px;min-width:92px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;border:2px solid;letter-spacing:1px;touch-action:none;user-select:none}
 #jbtn:active{opacity:.8}
 
 /* ── INVENTORY DRAWER (slides up from bottom of canvas area) ── */
-#inv-drawer{position:absolute;left:50%;bottom:14px;transform:translateX(-50%) translateY(100%);background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:20px;padding:16px;z-index:20;transition:transform .25s ease;max-height:65%;width:min(92vw,620px)}
-#inv-drawer.open{transform:translateX(-50%) translateY(0)}
+#inv-drawer{position:absolute;left:8px;right:8px;bottom:8px;background:#0d1f12;border-top:2px solid rgba(124,179,66,.35);border-radius:18px;padding:14px;z-index:20;transform:translateY(110%);transition:transform .25s ease;max-height:58%;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+#inv-drawer.open{transform:translateY(0)}
 .id-title{font-size:13px;font-weight:700;color:#7cb342;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .id-close{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.45);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}
-.id-slots{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start}
+.id-slots{display:flex;flex-wrap:wrap;gap:10px}
 .id-slot{display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;cursor:pointer;min-width:72px;touch-action:none;user-select:none;transition:all .15s}
 .id-slot:active{transform:scale(.92);background:rgba(255,255,255,.14)}
 .id-slot .se{font-size:28px;line-height:1}
@@ -220,7 +219,7 @@ canvas{display:block;touch-action:none;width:100%;height:100%}
     <button class="hhbtn" id="hpausebtn" onclick="togglePause()" style="color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.15)">⏸</button>
   </div>
   <div id="act-bar"></div>
-  <div id="cw" style="position:relative">
+  <div id="cw">
     <canvas id="gc"></canvas>
     <!-- Inventory Drawer -->
     <div id="inv-drawer">
@@ -665,44 +664,16 @@ function showGameOver(data){
 // ═════════════════════════════════════════
 //  GAME ENGINE
 // ═════════════════════════════════════════
-function resizeGameCanvas(){
-  var cv=document.getElementById('gc');
-  var cw=document.getElementById('cw');
-  if(!cv||!cw) return null;
-  var r=cw.getBoundingClientRect();
-  var dpr=Math.max(1,window.devicePixelRatio||1);
-  var W=Math.max(320,Math.round(r.width));
-  var H=Math.max(220,Math.round(r.height));
-  cv.style.width=W+'px';
-  cv.style.height=H+'px';
-  cv.width=Math.max(1,Math.round(W*dpr));
-  cv.height=Math.max(1,Math.round(H*dpr));
-  var ctx=cv.getContext('2d');
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  return {cv:cv,ctx:ctx,W:W,H:H};
-}
-window.addEventListener('resize',function(){ if(G){ var lvl=G.lvLevel||0; startGame(lvl); } });
 var G=null, RAF=null, PAUSED=false, KEYS={}, TOUCH={left:false,right:false}, MAX_LIVES=5;
 
 // Controls
 (function(){
   var bl=document.getElementById('btnL'),br=document.getElementById('btnR'),jb=document.getElementById('jbtn');
-  function hold(el,dir){
-    var down=function(e){e.preventDefault();TOUCH[dir]=true;try{el.setPointerCapture(e.pointerId);}catch(_){}};
-    var up=function(e){e&&e.preventDefault&&e.preventDefault();TOUCH[dir]=false;};
-    el.addEventListener('pointerdown',down,{passive:false});
-    el.addEventListener('pointerup',up,{passive:false});
-    el.addEventListener('pointerleave',up,{passive:false});
-    el.addEventListener('pointercancel',up,{passive:false});
-    el.addEventListener('lostpointercapture',up,{passive:false});
-    el.addEventListener('mousedown',function(e){e.preventDefault();TOUCH[dir]=true;});
-    el.addEventListener('mouseup',up);
-  }
-  hold(bl,'left');
-  hold(br,'right');
-  function jump(e){e.preventDefault();if(G)G.jbuf=10;}
-  jb.addEventListener('pointerdown',jump,{passive:false});
-  jb.addEventListener('mousedown',jump);
+  function pd(d){return function(e){e.preventDefault();TOUCH[d]=true;};}
+  function pu(d){return function(){TOUCH[d]=false;};}
+  bl.addEventListener('pointerdown',pd('left'),{passive:false}); bl.addEventListener('pointerup',pu('left')); bl.addEventListener('pointerleave',pu('left')); bl.addEventListener('pointercancel',pu('left'));
+  br.addEventListener('pointerdown',pd('right'),{passive:false}); br.addEventListener('pointerup',pu('right')); br.addEventListener('pointerleave',pu('right')); br.addEventListener('pointercancel',pu('right'));
+  jb.addEventListener('pointerdown',function(e){e.preventDefault();if(G)G.jbuf=10;},{passive:false});
 })();
 document.addEventListener('keydown',function(e){
   KEYS[e.code]=true;
@@ -711,9 +682,6 @@ document.addEventListener('keydown',function(e){
   if(e.code==='KeyQ') useNextBoost();
 });
 document.addEventListener('keyup',function(e){KEYS[e.code]=false;});
-document.addEventListener('pointerup',function(){TOUCH.left=false;TOUCH.right=false;});
-window.addEventListener('blur',function(){TOUCH.left=false;TOUCH.right=false;Object.keys(KEYS).forEach(function(k){KEYS[k]=false;});});
-document.addEventListener('visibilitychange',function(){if(document.hidden){TOUCH.left=false;TOUCH.right=false;Object.keys(KEYS).forEach(function(k){KEYS[k]=false;});}});
 
 function togglePause(){
   if(!G) return; PAUSED=!PAUSED;
@@ -724,7 +692,7 @@ function quitGame(){
   if(!confirm('Quit this level? Your coins will be saved.')) return;
   cancelAnimationFrame(RAF);
   ME.coins=G.wallet; ME.best=Math.max(ME.best,G.score); ME.inv=G.inv.slice();
-  G=null; PAUSED=false; TOUCH.left=false; TOUCH.right=false;
+  G=null; PAUSED=false;
   goTitle();
 }
 function updateLivesHUD(){
@@ -768,47 +736,50 @@ function startGame(level){
   if(RAF) cancelAnimationFrame(RAF);
   if(!ME) return;
   PAUSED=false; closeDrawer();
-  G&& (G.lvLevel=level);
   document.getElementById('hpausebtn').textContent='⏸';
   document.getElementById('act-bar').style.display='none';
+  showPage('pg-game');
 
   var cv=document.getElementById('gc');
   var cw=document.getElementById('cw');
-  var r=cw.getBoundingClientRect();
-  var dpr=Math.max(1,window.devicePixelRatio||1);
-  var W=Math.max(320,Math.round(r.width));
-  var H=Math.max(220,Math.round(r.height));
-  cv.style.width=W+'px';
-  cv.style.height=H+'px';
-  cv.width=Math.max(1,Math.round(W*dpr));
-  cv.height=Math.max(1,Math.round(H*dpr));
-  var ctx=cv.getContext('2d');
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  var S=W/800, GY=H-Math.round(58*S);
-  var st=STAGES[Math.min(level,STAGES.length-1)];
-  var lv=makeLevel(level,GY);
 
-  // Style HUD accent
-  document.getElementById('hud').style.borderBottomColor=st.ac+'30';
-  document.getElementById('hfill').style.background='linear-gradient(90deg,'+st.pl+','+st.ac+')';
-  document.getElementById('hfill').style.boxShadow='0 0 6px '+st.ac+'70';
-  document.getElementById('hsname').textContent=st.ic+' '+st.name+' · '+st.sub;
-  document.getElementById('hpausebtn').style.color=st.ac;
-  document.getElementById('hpausebtn').style.borderColor=st.ac+'44';
-  document.getElementById('jbtn').style.cssText='height:54px;padding:0 26px;min-width:112px;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer;letter-spacing:1px;touch-action:none;user-select:none;border:2px solid '+st.ac+'77;color:'+st.ac+';background:'+st.ac+'18';
+  // Use ResizeObserver: fires AFTER the browser has painted the flex layout
+  // and gives us the real rendered dimensions — works in file:// and http://
+  var ro=new ResizeObserver(function(entries){
+    ro.disconnect(); // only need first measurement
+    var entry=entries[0];
+    var W=Math.max(320,Math.floor(entry.contentRect.width));
+    var H=Math.max(180,Math.floor(entry.contentRect.height));
+    initGame(W,H);
+  });
+  ro.observe(cw);
 
-  // G = single source of truth for all game state
-  G={
-    p:{x:140*S, y:GY-24*S, vy:0, gr:false, fr:0, coy:0, dead:false, dt:0, prevY:GY-24*S},
-    cam:0, lives:MAX_LIVES, score:0, got:0, bGot:[],
-    inv: ME.inv ? ME.inv.slice() : [],   // copy from ME
-    act:{shield:false,fly:false,magnet:false,boots:false,ghost:false,star:false},
-    tmr:{}, t:0, jbuf:0, pts:[], lv:lv, wallet:ME.coins,
-    done:false, doneT:0, lvLevel:level
-  };
+  function initGame(W,H){
+    var ctx=cv.getContext('2d');
+    cv.width=W; cv.height=H;
+    var S=W/800, GY=H-Math.round(58*S);
+    var st=STAGES[Math.min(level,STAGES.length-1)];
+    var lv=makeLevel(level,GY);
 
-  updateLivesHUD(); refreshInvUI();
-  showPage('pg-game');
+    // Style HUD accent
+    document.getElementById('hud').style.borderBottomColor=st.ac+'30';
+    document.getElementById('hfill').style.background='linear-gradient(90deg,'+st.pl+','+st.ac+')';
+    document.getElementById('hfill').style.boxShadow='0 0 6px '+st.ac+'70';
+    document.getElementById('hsname').textContent=st.ic+' '+st.name+' · '+st.sub;
+    document.getElementById('hpausebtn').style.color=st.ac;
+    document.getElementById('hpausebtn').style.borderColor=st.ac+'44';
+    document.getElementById('jbtn').style.cssText='height:50px;padding:0 22px;min-width:88px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;letter-spacing:1px;touch-action:none;user-select:none;border:2px solid '+st.ac+'77;color:'+st.ac+';background:'+st.ac+'18';
+
+    G={
+      p:{x:140*S, y:GY-24*S, vy:0, gr:false, fr:0, coy:0, dead:false, dt:0, prevY:GY-24*S},
+      cam:0, lives:MAX_LIVES, score:0, got:0, bGot:[],
+      inv: ME.inv ? ME.inv.slice() : [],
+      act:{shield:false,fly:false,magnet:false,boots:false,ghost:false,star:false},
+      tmr:{}, t:0, jbuf:0, pts:[], lv:lv, wallet:ME.coins,
+      done:false, doneT:0
+    };
+
+    updateLivesHUD(); refreshInvUI();
 
   function tick(){
     RAF=requestAnimationFrame(tick);
@@ -975,7 +946,8 @@ function startGame(level){
   function drawPaused(){render();ctx.fillStyle='rgba(0,0,0,.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.font='bold '+Math.round(34*S)+'px system-ui';ctx.textAlign='center';ctx.shadowBlur=16;ctx.shadowColor='rgba(100,200,255,.5)';ctx.fillText('Paused',W/2,H/2-14*S);ctx.font=Math.round(13*S)+'px system-ui';ctx.shadowBlur=0;ctx.fillStyle='rgba(255,255,255,.45)';ctx.fillText('Tap ⏸ or press P to resume',W/2,H/2+16*S);ctx.textAlign='left';}
 
   RAF=requestAnimationFrame(tick);
-}
+  } // end initGame
+} // end startGame
 
 // Female character
 function drawFemale(ctx,p,S,act){
