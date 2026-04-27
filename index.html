@@ -65,23 +65,23 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Exo 2',system-ui,s
   align-items:center;
   gap:0;
   background:rgba(0,0,0,.95);
-  padding:0 18px;
+  padding:0 12px;
   width:100%;
   flex-shrink:0;
   border-bottom:2px solid rgba(255,255,255,.08);
-  height:54px;
+  height:50px;
 }
 /* Left zone */
 #hud-left{display:flex;align-items:center;gap:10px;overflow:hidden}
 #hlives{display:flex;gap:2px;font-size:16px;flex-shrink:0;line-height:1}
 #hsname{font-size:8px;color:rgba(255,255,255,.4);letter-spacing:1.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;font-weight:700;font-family:'Orbitron',monospace}
 /* Center zone — progress bar */
-#hud-center{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 20px;min-width:220px}
+#hud-center{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 16px;min-width:180px}
 #hprog-label{font-size:7px;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase;font-family:'Orbitron',monospace;font-weight:700}
 #hbar{height:7px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;width:100%}
 #hfill{height:100%;width:0%;border-radius:4px;transition:width .12s linear}
 /* Right zone */
-#hud-right{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+#hud-right{display:flex;align-items:center;gap:8px;justify-content:flex-end}
 .hud-val{display:flex;align-items:center;gap:5px;flex-shrink:0}
 .hud-val-num{font-size:14px;font-weight:900;font-family:'Orbitron',monospace;line-height:1}
 .hud-divider{width:1px;height:24px;background:rgba(255,255,255,.1);flex-shrink:0}
@@ -100,21 +100,21 @@ canvas{display:block;touch-action:none}
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:10px 20px;
+  padding:8px 16px;
   width:100%;
   flex-shrink:0;
   background:rgba(0,0,0,.94);
   border-top:1px solid rgba(255,255,255,.08);
-  height:76px;
-  gap:18px;
+  height:68px;
+  gap:12px;
 }
 /* Arrow buttons — left side */
-.ctrl-arrows{display:flex;gap:12px;align-items:center}
+.ctrl-arrows{display:flex;gap:8px;align-items:center}
 /* Action buttons — right side */
-.ctrl-actions{display:flex;gap:14px;align-items:center}
+.ctrl-actions{display:flex;gap:10px;align-items:center}
 /* Arrow move buttons */
 .cmb{
-  width:60px;height:54px;border-radius:16px;font-size:24px;
+  width:56px;height:52px;border-radius:14px;font-size:24px;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);
   color:rgba(255,255,255,.85);touch-action:none;user-select:none;
@@ -124,7 +124,7 @@ canvas{display:block;touch-action:none}
 /* Inventory bag button */
 #inv-btn{
   position:relative;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:2px;width:78px;height:54px;border-radius:16px;
+  justify-content:center;gap:2px;width:72px;height:52px;border-radius:14px;
   background:rgba(124,179,66,.12);border:2px solid rgba(124,179,66,.55);
   color:#7cb342;cursor:pointer;touch-action:none;user-select:none;
   transition:background .1s,transform .1s;
@@ -141,7 +141,7 @@ canvas{display:block;touch-action:none}
 #inv-count.show{display:flex}
 /* Jump button */
 #jbtn{
-  height:54px;padding:0 30px;min-width:120px;border-radius:16px;
+  height:52px;padding:0 28px;min-width:110px;border-radius:14px;
   font-size:16px;font-weight:900;cursor:pointer;border:2px solid;
   letter-spacing:2px;touch-action:none;user-select:none;font-family:'Orbitron',monospace;
   transition:opacity .1s,transform .1s;
@@ -780,81 +780,33 @@ function updateLivesHUD(){
 }
 
 // Level generator
-function makeLevel(lvl,GY,S){
-  S = S || 1;
+function makeLevel(lvl,GY){
   var seed=(lvl+1)*6271, rng=function(n){return((Math.sin(n*seed*0.731+n)*43758.5)%1+1)%1;};
-  var easy=lvl===0, diff=easy?0:lvl/11, len=easy?3600:5600+lvl*820;
+  var easy=lvl===0, diff=easy?0:lvl/11, len=easy?3600:5200+lvl*760;
   var plats=[],coins=[],monsters=[],hazards=[],boxes=[],gaps=[];
-  plats.push({x:0,y:GY,w:easy?620:460,h:72,grnd:true});
-
-  // Wider spacing on desktop-sized canvases keeps the world readable.
-  var worldScale=Math.max(.95,Math.min(1.28,(S||1)));
-  var cur=easy?620*worldScale:460*worldScale,ci=0;
-
+  plats.push({x:0,y:GY,w:easy?620:420,h:72,grnd:true});
+  var cur=easy?620:420,ci=0;
   while(cur<len){
     var r=function(n){return rng(ci*113+n);};
-
-    var gapBase=easy?36:52+diff*16;
-    var gapRange=easy?30:72+diff*34;
-    var gap=(gapBase+r(1)*gapRange)*worldScale;
-    cur+=gap;
-
-    var pwBase=easy?170:150-diff*8;
-    var pwRange=easy?110:95;
-    var pw=Math.max(easy?120:86,(pwBase+r(2)*pwRange)*worldScale);
-
-    var pyBase=easy?GY-48:GY-58;
-    var pyRange=easy?72:130+diff*120;
-    var py=easy?GY-40-r(3)*60*worldScale:GY-70-r(3)*pyRange*worldScale;
-
+    var gap=easy?70+r(1)*90:90+r(1)*(80+diff*120); cur+=gap;
+    var pw=easy?180+r(2)*90:Math.max(80,140+r(2)*90-diff*30);
+    var py=easy?GY-70-r(3)*110:GY-85-r(3)*(90+diff*100);
     plats.push({x:cur,y:py,w:pw,h:14,grnd:false});
-
-    var cn=easy?2+Math.floor(r(4)*2):1+Math.floor(r(4)*3);
-    for(var c=0;c<cn;c++){
-      coins.push({
-        x:cur+(pw/(cn+1))*(c+1),
-        y:py-(34+r(c+5)*22*worldScale),
-        r:8,
-        taken:false,
-        bob:r(c+6)*Math.PI*2
-      });
-    }
-    if(r(7)<(easy?.42:.28)){
-      coins.push({x:cur-gap/2,y:GY-38-r(8)*12*worldScale,r:8,taken:false,bob:r(8)*Math.PI*2});
-    }
-
+    var cn=easy?1+Math.floor(r(4)*2):1+Math.floor(r(4)*3);
+    for(var c=0;c<cn;c++) coins.push({x:cur+(pw/(cn+1))*(c+1),y:py-40-r(c+5)*10,r:8,taken:false,bob:r(c+6)*Math.PI*2});
+    if(r(7)<(easy?.35:.28)) coins.push({x:cur+pw*0.5-r(8)*18,y:py-54-r(9)*10,r:8,taken:false,bob:r(10)*Math.PI*2});
     if(!easy){
-      if(ci>2&&r(9)<.16+diff*.18) monsters.push({x:cur+pw/2,y:py-18,bx:cur+10,rw:Math.max(pw-20,20),vx:(r(11)-.5)*(1.1+diff*1.6),tp:ci%5,ph:r(12)*Math.PI*2});
-      if(ci>3&&r(13)<.12+diff*.14) monsters.push({x:cur-gap/3,y:GY-18,bx:cur-gap/2,rw:Math.max(gap-18,24),vx:(r(15)-.5)*(1.2+diff*1.7),tp:(ci+2)%5,ph:r(16)*Math.PI*2});
-      if(ci>2&&r(17)<.10+diff*.12) hazards.push({type:'spike',x:cur+r(18)*(pw-28),y:py-22,w:22,h:22});
-      if(ci>4&&r(19)<.08+diff*.10) hazards.push({type:'spike',x:cur-12,y:GY-22,w:22,h:22});
-      if(lvl>=4&&r(20)<.08+diff*.10) hazards.push({type:'swamp',x:cur+r(21)*(pw-46),y:GY-10,w:44+r(22)*26,h:14});
-      if(lvl>=6&&r(23)<.05+diff*.08) hazards.push({type:'rock',x:cur+pw/2,y:-50,vy:0,on:true,w:18,h:18});
+      if(ci>2&&r(11)<.16+diff*.18) monsters.push({x:cur+pw/2,y:py-18,bx:cur+8,rw:Math.max(pw-16,18),vx:(r(12)-.5)*(1+diff*1.4),tp:ci%5,ph:r(13)*Math.PI*2});
+      if(ci>4&&r(14)<.08+diff*.12) monsters.push({x:cur-gap*0.35,y:GY-18,bx:cur-gap*0.6,rw:Math.max(gap*0.55,24),vx:(r(15)-.5)*(1.1+diff*1.5),tp:(ci+2)%5,ph:r(16)*Math.PI*2});
+      if(ci>2&&r(17)<.12+diff*.16) hazards.push({type:'spike',x:cur+r(18)*(pw-22),y:py-22,w:22,h:22});
+      if(ci>3&&r(19)<.1+diff*.16) hazards.push({type:'spike',x:cur-12,y:GY-22,w:22,h:22});
+      if(lvl>=4&&r(20)<.1+diff*.14) hazards.push({type:'swamp',x:cur+r(21)*(Math.max(pw-50,10)),y:GY-10,w:42+r(22)*26,h:14});
+      if(lvl>=6&&r(23)<.07+diff*.1) hazards.push({type:'rock',x:cur+pw/2,y:-50,vy:0,on:true,w:18,h:18});
     }
-
-    if((easy?ci%3===1:ci%4===2) && r(24)<(easy?.45:.32)){
-      boxes.push({x:cur+pw/2,y:py-54,boost:BT[easy?2:Math.floor(r(25)*6)].id,hit:false});
-    }
-
-    cur+=pw+12*worldScale;
-    ci++;
+    if((easy&&ci%4===1)||(!easy&&ci%5===2&&r(24)<.38)) boxes.push({x:cur+pw/2,y:py-50,boost:BT[easy?2:Math.floor(r(25)*6)].id,hit:false});
+    cur+=pw+18; ci++;
   }
-
-  if(!easy){
-    var gc=540*worldScale,gi=0;
-    while(gc<len-700){
-      var grf=function(n){return rng(gi*61+n+333);};
-      if(gi>0){
-        var gw=(34+grf(1)*(40+diff*18))*worldScale;
-        gaps.push({x:gc,w:gw});
-        gc+=gw+(220+grf(2)*250)*worldScale;
-      }else{
-        gc+=260*worldScale+grf(2)*120*worldScale;
-      }
-      gi++;
-    }
-  }
-
+  if(!easy){var gc=500,gi=0;while(gc<len-500){var grf=function(n){return rng(gi*61+n+333);};if(gi>0){var gw=42+grf(1)*(38+diff*44);gaps.push({x:gc,w:gw});gc+=gw+220+grf(2)*240;}else gc+=260+grf(2)*120;gi++;}}
   return{plats:plats,coins:coins,monsters:monsters,hazards:hazards,boxes:boxes,gaps:gaps,end:len};
 }
 
@@ -885,7 +837,7 @@ function startGame(level){
     cv.width=W; cv.height=H;
     var S=W/800, GY=H-Math.round(58*S);
     var st=STAGES[Math.min(level,STAGES.length-1)];
-    var lv=makeLevel(level,GY,S);
+    var lv=makeLevel(level,GY);
 
     // Style HUD accent
     document.getElementById('hud').style.borderBottomColor=st.ac+'30';
@@ -1032,7 +984,7 @@ function startGame(level){
     vg.forEach(function(ga){var gxS=ga.x,gwS=ga.w;if(gx<gxS)ctx.fillRect(gx,GY,gxS-gx,H-GY);gx=gxS+gwS;});
     if(gx<gr2)ctx.fillRect(gx,GY,gr2-gx,H-GY);
     ctx.fillStyle=st.pl;ctx.fillRect(gl,GY,gr2-gl,5*S);
-    ctx.fillStyle=st.pl+'bb';for(var i=0;i<18;i++){var tx=gl+i*76*S+(i*41%28)*S;if(!vg.some(function(ga){return tx>ga.x-6&&tx<(ga.x+ga.w)+6;}))ctx.fillRect(tx,GY-4*S,6*S,5*S);}
+    ctx.fillStyle=st.pl+'bb';for(var i=0;i<18;i++){var tx=gl+i*88*S+(i*37%28)*S;if(!vg.some(function(ga){return tx>ga.x-5&&tx<(ga.x+ga.w)+5;}))ctx.fillRect(tx,GY-4*S,5*S,5*S);}
     // Platforms
     lv2.plats.forEach(function(pl){
       if(pl.grnd)return;
